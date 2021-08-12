@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+					    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	
+	<resultMap id="UserResult" type="com.board.beans.UserBean">
+		<id property="userIdx" column="user_idx" />
+		<result property="userName" column="user_name"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPw" column="user_pw"/>
+		<result property="userAdd1" column="user_add1"/>
+		<result property="userAdd2" column="user_add2"/>
+		<result property="userAdd3" column="user_add3"/>
+		<result property="userNum" column="user_num"/>
+	</resultMap>
+
+	<sql id="listCols">
+		user_name,
+		user_id,
+		user_pw,
+		user_num,
+		user_add1,
+		user_add2,
+		user_add3
+	</sql>
+	
+	<select id="checkUserIdExist" resultType="java.lang.String" parameterType="java.lang.String" >
+		SELECT
+			user_name
+		FROM 
+			user_table
+		WHERE 
+			user_id = #{userId}
+	</select>
+	
+	<insert id="addUser" parameterType="com.board.beans.UserBean">
+		INSERT INTO 
+			user_table (<include refid="listCols"/>)
+		VALUES 
+			( #{userName}, #{userId}, #{userPw}, #{userNum}, #{userAdd1}, #{userAdd2}, #{userAdd3} )
+	</insert> 
+	
+	<select id="getLoginUserInfo" parameterType="com.board.beans.UserBean" resultMap="UserResult">
+		SELECT
+			user_idx, user_name
+		FROM
+			user_table
+		WHERE
+			user_id = #{userId} and user_pw = #{userPw}
+	</select>
+	
+	<select id="getUserInfo" parameterType="com.board.beans.UserBean" resultMap="UserResult">
+		SELECT
+			user_name, user_id, user_num, user_idx, user_pw
+		FROM 
+			user_table
+		WHERE 
+			user_idx = #{userIdx}
+	</select>
+	
+	<delete id="deleteUser" parameterType="com.board.beans.UserBean">
+		DELETE FROM 
+			user_table
+		WHERE 
+			user_idx = #{userIdx}
+		AND
+			user_num = #{userNum}
+    	AND
+    		user_pw = #{userPw}
+	</delete>
+</mapper>
