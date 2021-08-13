@@ -1,6 +1,7 @@
 package com.board.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class UserController {
 	
 	@RequestMapping(value="/login_pro", method=RequestMethod.POST)
 	public String login_pro(@Valid @ModelAttribute("tempLoginUserBean") UserBean tempLoginUserBean,
-			BindingResult result) {
+			 BindingResult result, Model model) {
 		
 		if (result.hasErrors()) {
 			return "user/login";
@@ -52,8 +53,10 @@ public class UserController {
 		
 		
 		if (loginUserBean.isUserLogin() == true) {
+			
 			return "user/login_success";
 		} else {
+
 			return "user/login_fail";
 		}
 		
@@ -117,6 +120,51 @@ public class UserController {
 			return "user/delete";
 		}
 			
+	}
+	
+	@RequestMapping(value = {"/find_id", "/find_pw"}, method = RequestMethod.GET)
+	public String find(UserBean userBean, HttpServletRequest request) {
+		String requestUrl = request.getRequestURI();
+		
+		if (requestUrl.equals("/user/find_id")) {
+			return "user/find_id";
+		} else {
+			return "user/find_pw";
+		}
+	}
+	
+	@RequestMapping(value = {"/find_id_pro", "/find_pw_pro"}, method = RequestMethod.POST)
+	public String find_pro(UserBean userBean, HttpServletRequest request, Model model) {
+		String requestUrl = request.getRequestURI();
+		
+		if (requestUrl.equals("/user/find_id_pro")) {
+			String result = userService.findUserId(userBean);
+
+			if (result == null) {
+				model.addAttribute("check", 1);
+				
+				return "user/find_id";
+			} else {
+				model.addAttribute("check", 0);
+				model.addAttribute("result", result);
+				
+				return "user/find_id";
+			}
+			
+		} else {
+			UserBean result = userService.findUserPw(userBean);
+			
+			if (result.getUserIdx() != 0 ) {
+				model.addAttribute("check", 1);
+				model.addAttribute("result", result.getUserIdx());
+				
+				return "user/modifyPw";
+			} else {
+				model.addAttribute("check", 0);
+				
+				return "user/find_pw";
+			}
+		}
 	}
 	
 	@InitBinder

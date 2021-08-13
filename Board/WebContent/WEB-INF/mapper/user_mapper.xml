@@ -68,4 +68,30 @@
     	AND
     		user_pw = #{userPw}
 	</delete>
+	
+	<select id="findUserId" parameterType="com.board.beans.UserBean" resultType="java.lang.String">
+		SELECT	
+			user_id
+		FROM
+			user_table
+		WHERE 
+			user_name = #{userName}
+		AND
+			user_num = #{userNum}
+	</select>
+	
+	<select id="findUserPw" parameterType="com.board.beans.UserBean" resultMap="UserResult">
+		SELECT
+			user_idx
+		FROM
+			user_table
+		WHERE
+			user_name = #{userName}
+		AND
+			user_num = #{userNum}
+		AND	
+			user_id = #{userId}
+	</select>
+	
+	
 </mapper>

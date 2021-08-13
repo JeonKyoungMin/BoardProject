@@ -77,4 +77,18 @@ public class UserServiceImpl implements UserService {
 		userDao.deleteUser(userBean);
 		
 	}
+	
+	@Override
+	public String findUserId(UserBean userBean) {
+		String result = userDao.findUserId(userBean);
+		
+		return result;
+	}
+	
+	@Override
+	public UserBean findUserPw(UserBean userBean) {
+		UserBean result = userDao.findUserPw(userBean); 
+		
+		return result;
+	}
 }

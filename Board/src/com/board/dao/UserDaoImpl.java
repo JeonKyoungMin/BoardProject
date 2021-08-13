@@ -54,4 +54,18 @@ public class UserDaoImpl implements UserDao {
 	public void deleteUser(UserBean userBean) {
 		sqlSessionTemplate.delete("user.deleteUser", userBean);
 	}
+	
+	@Override
+	public String findUserId(UserBean userBean) {
+		String result = sqlSessionTemplate.selectOne("user.findUserId",userBean);
+		
+		return result;
+	}
+	
+	@Override
+	public UserBean findUserPw(UserBean userBean) {
+		UserBean result = sqlSessionTemplate.selectOne("user.findUserPw", userBean);
+		
+		return result;
+	}
 }

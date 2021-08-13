@@ -16,4 +16,8 @@ public interface UserService {
 	public void getUserInfo(UserBean userBean);
 	
 	public void deleteUser(UserBean userBean);
+	
+	public String findUserId(UserBean userBean);
+	
+	public UserBean findUserPw(UserBean userBean);
 }

@@ -41,6 +41,9 @@
 					<li class="nav-item">
 						<a href="${root }user/join" class="nav-link">회원가입</a>
 					</li>
+					<li class="nav-item">
+						<a href="${root }user/find_id" class="nav-link">정보찾기</a>
+					</li>
 				</c:otherwise>
 			</c:choose>
 		</ul>

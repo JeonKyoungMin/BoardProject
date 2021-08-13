@@ -17,4 +17,7 @@ public interface UserDao {
 	
 	public void deleteUser(UserBean userBean);
 
+	public String findUserId(UserBean userBean);
+	
+	public UserBean findUserPw(UserBean userBean);
 }
