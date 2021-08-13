@@ -9,3 +9,4 @@ public class BoardInfoBean {
 	private String boardInfoName;
 	
 }
+	

@@ -89,6 +89,16 @@ public class UserServiceImpl implements UserService {
 	public UserBean findUserPw(UserBean userBean) {
 		UserBean result = userDao.findUserPw(userBean); 
 		
+		if (result != null) {
+			userBean.setUserIdx(result.getUserIdx());
+			userBean.setUserId(result.getUserId());
+			userBean.setUserName(result.getUserName());
+		}
 		return result;
+	}
+	
+	@Override
+	public void modifyUserPw(UserBean userBean) {
+		userDao.modifyUserPw(userBean);
 	}
 }

@@ -122,49 +122,73 @@ public class UserController {
 			
 	}
 	
-	@RequestMapping(value = {"/find_id", "/find_pw"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/findId", "/findPw"}, method = RequestMethod.GET)
 	public String find(UserBean userBean, HttpServletRequest request) {
 		String requestUrl = request.getRequestURI();
 		
-		if (requestUrl.equals("/user/find_id")) {
-			return "user/find_id";
+		if (requestUrl.equals("/user/findId")) {
+			
+			return "user/findId";
 		} else {
-			return "user/find_pw";
+			
+			return "user/findPw";
 		}
 	}
 	
-	@RequestMapping(value = {"/find_id_pro", "/find_pw_pro"}, method = RequestMethod.POST)
-	public String find_pro(UserBean userBean, HttpServletRequest request, Model model) {
-		String requestUrl = request.getRequestURI();
-		
-		if (requestUrl.equals("/user/find_id_pro")) {
-			String result = userService.findUserId(userBean);
+	@RequestMapping(value = "/findId_pro", method = RequestMethod.POST)
+	public String find_id_pro(UserBean userBean, Model model) {
 
-			if (result == null) {
-				model.addAttribute("check", 1);
-				
-				return "user/find_id";
-			} else {
-				model.addAttribute("check", 0);
-				model.addAttribute("result", result);
-				
-				return "user/find_id";
-			}
+		String result = userService.findUserId(userBean);
+
+		if (result == null) {
+			model.addAttribute("check", 1);
 			
+			return "user/findId";
 		} else {
-			UserBean result = userService.findUserPw(userBean);
-			
-			if (result.getUserIdx() != 0 ) {
-				model.addAttribute("check", 1);
-				model.addAttribute("result", result.getUserIdx());
+			model.addAttribute("check", 0);
+			model.addAttribute("result", result);
 				
-				return "user/modifyPw";
-			} else {
-				model.addAttribute("check", 0);
-				
-				return "user/find_pw";
-			}
+			return "user/findId";
 		}
+	}
+	
+	@RequestMapping(value= "/findPw_pro", method = RequestMethod.POST)
+	public String find_pw_pro (UserBean userBean, Model model) {
+		
+		UserBean result = userService.findUserPw(userBean);
+		
+		if (result == null) {
+			model.addAttribute("check", 1);
+			
+			return "user/findPw";
+		} else {
+			model.addAttribute("check", 0);
+			model.addAttribute("result", result);
+			userBean.setUserLogin(true);
+			
+			return "user/findPw";
+		}
+	}
+	
+	@RequestMapping(value = "/modifyPw", method= RequestMethod.GET)
+	public String modifyPw(UserBean userBean) {
+		
+		return "user/modifyPw";
+	}
+	
+	@RequestMapping(value = "/modifyPw_pro", method = RequestMethod.POST)
+	public String modifyPw_pro (UserBean userBean, Model model) {
+		
+		if (userBean.getUserPw() != userBean.getUserPw2()) {
+			model.addAttribute("check", 1);
+			
+			return "user/modifyPw";
+		} else {
+			userService.modifyUserPw(userBean);
+			
+			return "user/login";
+		}
+		
 	}
 	
 	@InitBinder

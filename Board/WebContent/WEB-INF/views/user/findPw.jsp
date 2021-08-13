@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix='form' uri="http://www.springframework.org/tags/form"%>
-<c:set var='root' value='${pageContext.request.contextPath }/' />
-
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix='form' uri="http://www.springframework.org/tags/form" %>
+<c:set var='root' value='${pageContext.request.contextPath }/' />    
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,26 +25,28 @@ $(document).ready(function(){
 <body>
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 
-
 	<div class="container" style="margin-top: 100px">
 		<div class="row">
 			<div class="col-sm-3"></div>
 			<div class="col-sm-6">
-				<div>
-					 <h3 align="center">아이디 찾기 </h3>  
-				 </div>
+					<div>
+						<h3 align='center'>비밀번호 찾기</h3>
+					 </div>
 				<div class="card shadow">
 					<div class="card-body">
-						<form:form action="${root }user/find_id_pro" method='post' modelAttribute="userBean">
+						<form:form action="${root }user/findPw_pro" method='post' modelAttribute="userBean">
 							<div class="form-group">
 								<form:label path="userName">이름</form:label>
 								<form:input path="userName" class='form-control'/>
-								<form:errors path="userName" style='color:red'/>
 							</div>
 							<div class="form-group">
 								<form:label path="userNum">전화번호</form:label>
 								<form:input path="userNum" name="userNum" id="userNum" maxlength="11" class='form-control' />
-								<form:errors path="userNum" style='color:red'/>
+							</div>
+							
+							<div class="form-group">
+								<form:label path="userId">아이디</form:label>
+								<form:input path="userId" class='form-control' />
 							</div>
 							
 							<c:choose>
@@ -54,20 +55,21 @@ $(document).ready(function(){
 									<label style="color:red;">정보를 다시 입력해주세요.</label>
 								</c:when>
 								<c:when test="${check == 0 }">
-									<label style="color : red;">회원님의 아이디는 ${result } 입니다.</label>
+									<label style="color : blue;">${result.userName }님 비밀번호를 재설정 해주세요</label> <br>
+									<a href='${root }user/modifyPw?userIdx=${result.userIdx}&userName=${result.userName }&userId=${result.userId }' >비밀번호 재설정</a> <br><br>
 								</c:when>
 							</c:choose>
-							
+						
 							<div class="form-group">
 								<div class="text-left">
-									<form:button class='btn btn-primary'>아이디 찾기</form:button>
-									<a href='${root }user/find_pw' class='btn btn-info'>비밀번호 찾기</a>
-									<br>
+									<form:button class='btn btn-primary'>비밀번호 찾기</form:button>
+									<a href='${root }user/findId' class='btn btn-info'>아이디 찾기</a>
 									<div class="text-left">
 										<a href='${root }user/login' class='btn btn-success'>로그인</a>
 									</div> 
 								</div>
 							</div>
+
 						</form:form>
 					</div>
 				</div>

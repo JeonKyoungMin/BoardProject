@@ -68,4 +68,9 @@ public class UserDaoImpl implements UserDao {
 		
 		return result;
 	}
+	
+	@Override
+	public void modifyUserPw(UserBean userBean) {
+		sqlSessionTemplate.update("user.modifyUserPw",userBean);
+	}
 }

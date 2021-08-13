@@ -20,4 +20,6 @@ public interface UserDao {
 	public String findUserId(UserBean userBean);
 	
 	public UserBean findUserPw(UserBean userBean);
+	
+	public void modifyUserPw(UserBean userBean);
 }
