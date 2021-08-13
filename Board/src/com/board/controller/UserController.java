@@ -30,7 +30,7 @@ public class UserController {
 	@Resource(name= "loginUserBean")
 	@Lazy
 	private UserBean loginUserBean;
-	
+
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(@ModelAttribute("tempLoginUserBean") UserBean tempLoginUserBean,
 						@RequestParam(value = "fail", defaultValue = "false") boolean fail,
@@ -78,23 +78,18 @@ public class UserController {
 		return "user/join_success";
 	}
 	
-	@RequestMapping(value="/modify", method=RequestMethod.GET)
-	public String modify() {
-		return "user/modify";
-	}
-	
-	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout() {
-		loginUserBean.setUserLogin(false);
+	@RequestMapping(value= {"/logout", "/not_login"}, method=RequestMethod.GET)
+	public String logInfo(HttpServletRequest request) {
+		String requestUrl = request.getRequestURI();
 		
-		return "user/logout";
-	}
-	
-	@RequestMapping(value="/not_login", method=RequestMethod.GET)
-	public String not_login() {
-	
-		return "user/not_login";
+		if (requestUrl.equals("/user/logout")) {
+			loginUserBean.setUserLogin(false);
+			
+			return "user/logout";
+		} else {
+			
+			return "user/not_login";
+		}
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
@@ -136,7 +131,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/findId_pro", method = RequestMethod.POST)
-	public String find_id_pro(UserBean userBean, Model model) {
+	public String findId_pro(UserBean userBean, Model model) {
 
 		String result = userService.findUserId(userBean);
 
@@ -153,7 +148,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value= "/findPw_pro", method = RequestMethod.POST)
-	public String find_pw_pro (UserBean userBean, Model model) {
+	public String findPw_pro (UserBean userBean, Model model) {
 		
 		UserBean result = userService.findUserPw(userBean);
 		
@@ -164,31 +159,36 @@ public class UserController {
 		} else {
 			model.addAttribute("check", 0);
 			model.addAttribute("result", result);
-			userBean.setUserLogin(true);
 			
 			return "user/findPw";
 		}
 	}
 	
-	@RequestMapping(value = "/modifyPw", method= RequestMethod.GET)
-	public String modifyPw(UserBean userBean) {
+	
+	@RequestMapping(value = {"/modifyPw", "/modify"} ,method= RequestMethod.GET)
+	public String modify(UserBean userBean, HttpServletRequest request) {
+		String requestUrl = request.getRequestURI();
 		
-		return "user/modifyPw";
+		if (requestUrl.equals("/user/modifyPw")) {
+			
+			return "user/modifyPw";
+		} else {
+			
+			return "user/modify";
+		}
 	}
 	
 	@RequestMapping(value = "/modifyPw_pro", method = RequestMethod.POST)
-	public String modifyPw_pro (UserBean userBean, Model model) {
+	public String modifyPw_pro (UserBean userBean, Model model, BindingResult result) {
 		
-		if (userBean.getUserPw() != userBean.getUserPw2()) {
-			model.addAttribute("check", 1);
+		if (userBean.getUserPw().length() == 0 || !(userBean.getUserPw().equals(userBean.getUserPw2())) ) {
 			
 			return "user/modifyPw";
 		} else {
 			userService.modifyUserPw(userBean);
 			
-			return "user/login";
+			return "redirect:/user/login";
 		}
-		
 	}
 	
 	@InitBinder

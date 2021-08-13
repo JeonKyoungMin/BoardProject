@@ -40,12 +40,10 @@ $(document).ready(function(){
 							<div class="form-group">
 								<form:label path="userName">이름</form:label>
 								<form:input path="userName" class='form-control'/>
-								<form:errors path="userName" style='color:red'/>
 							</div>
 							<div class="form-group">
 								<form:label path="userNum">전화번호</form:label>
 								<form:input path="userNum" name="userNum" id="userNum" maxlength="11" class='form-control' />
-								<form:errors path="userNum" style='color:red'/>
 							</div>
 							
 							<c:choose>
