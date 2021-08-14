@@ -47,6 +47,9 @@ public class UserServiceImpl implements UserService {
 		userDao.addUser(joinUserBean);
 	}
 	
+	/**
+	 * <p>로그인 한 유저의 정보 검색 </p>
+	 */
 	@Override
 	public void getLoginUserInfo(UserBean tempLoginUserBean) {
 		UserBean tempLoginUserBean2 = userDao.getLoginUserInfo(tempLoginUserBean);
@@ -59,6 +62,9 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
+	/**
+	 * <p>유저 정보 검색</p>
+	 */
 	@Override
 	public void getUserInfo(UserBean userBean) {
 		UserBean result = userDao.getUserInfo(userBean);
@@ -72,12 +78,18 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	/**
+	 * <p>회원 탈퇴</p>
+	 */
 	@Override
 	public void deleteUser(UserBean userBean) {
 		userDao.deleteUser(userBean);
 		
 	}
 	
+	/**
+	 * <p>유저 아이디 찾기</p>
+	 */
 	@Override
 	public String findUserId(UserBean userBean) {
 		String result = userDao.findUserId(userBean);
@@ -85,6 +97,9 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
+	/**
+	 * <p>비밀번호 변경을 위해 유저 정보 검색</p>
+	 */
 	@Override
 	public UserBean findUserPw(UserBean userBean) {
 		UserBean result = userDao.findUserPw(userBean); 
@@ -97,8 +112,19 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
+	/**
+	 * <p>비밀번호 변경을 위해 정보 검색 후 정보가 있다면 유저 비밀번호 재설정</p>
+	 */
 	@Override
-	public void modifyUserPw(UserBean userBean) {
-		userDao.modifyUserPw(userBean);
+	public void modifyUserPw(UserBean modifyUserBean) {
+		userDao.modifyUserPw(modifyUserBean);
+	}
+	
+	/**
+	 * <p>회원 정보 수정 (비밀번호, 전화번호 , 주소)</p>
+	 */
+	@Override
+	public void modifyUserInfo(UserBean userBean) {
+		userDao.modifyUserInfo(userBean);
 	}
 }

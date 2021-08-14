@@ -166,26 +166,42 @@ public class UserController {
 	
 	
 	@RequestMapping(value = {"/modifyPw", "/modify"} ,method= RequestMethod.GET)
-	public String modify(UserBean userBean, HttpServletRequest request) {
+	public String modify(@ModelAttribute("modifyUserBean") UserBean modifyUserBean, HttpServletRequest request) {
 		String requestUrl = request.getRequestURI();
 		
 		if (requestUrl.equals("/user/modifyPw")) {
 			
 			return "user/modifyPw";
 		} else {
+			modifyUserBean.setUserIdx(loginUserBean.getUserIdx());
+			userService.getUserInfo(modifyUserBean);
 			
 			return "user/modify";
 		}
 	}
 	
-	@RequestMapping(value = "/modifyPw_pro", method = RequestMethod.POST)
-	public String modifyPw_pro (UserBean userBean, Model model, BindingResult result) {
+	@RequestMapping(value= "/modify_pro",method=RequestMethod.POST)
+	public String modify_pro(@Valid @ModelAttribute("modifyUserBean") UserBean modifyUserBean, BindingResult result) {
 		
-		if (userBean.getUserPw().length() == 0 || !(userBean.getUserPw().equals(userBean.getUserPw2())) ) {
+		if (result.hasErrors()) {
+			
+			return "user/modify";
+		} else {
+			userService.modifyUserInfo(modifyUserBean);
+			
+			return "redirect:/main";
+		}
+		
+	}
+	
+	@RequestMapping(value = "/modifyPw_pro", method = RequestMethod.POST)
+	public String modifyPw_pro (@ModelAttribute("modifyUserBean") UserBean modifyUserBean, Model model) {
+		
+		if (modifyUserBean.getUserPw().length() == 0 || !(modifyUserBean.getUserPw().equals(modifyUserBean.getUserPw2())) ) {
 			
 			return "user/modifyPw";
 		} else {
-			userService.modifyUserPw(userBean);
+			userService.modifyUserPw(modifyUserBean);
 			
 			return "redirect:/user/login";
 		}

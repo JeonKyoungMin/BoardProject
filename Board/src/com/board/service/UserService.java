@@ -21,5 +21,7 @@ public interface UserService {
 	
 	public UserBean findUserPw(UserBean userBean);
 	
-	public void modifyUserPw(UserBean userBean);
+	public void modifyUserPw(UserBean modifyUserBean);
+	
+	public void modifyUserInfo(UserBean userBean);
 }

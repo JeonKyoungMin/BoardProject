@@ -24,6 +24,11 @@
 		user_add3
 	</sql>
 	
+	<sql id="cols">
+		user_idx,
+		<include refid="listCols"/>
+	</sql>
+	
 	<select id="checkUserIdExist" resultType="java.lang.String" parameterType="java.lang.String" >
 		SELECT
 			user_name
@@ -51,7 +56,7 @@
 	
 	<select id="getUserInfo" parameterType="com.board.beans.UserBean" resultMap="UserResult">
 		SELECT
-			user_name, user_id, user_num, user_idx, user_pw
+			<include refid="cols"/>
 		FROM 
 			user_table
 		WHERE 
@@ -104,4 +109,16 @@
 			user_id = #{userId}
 	</update>
 	
+	<update id="modifyUserInfo" parameterType="com.board.beans.UserBean">
+		UPDATE
+			user_table
+		SET
+			user_pw = #{userPw},
+			user_num = #{userNum},	
+			user_add1 = #{userAdd1},
+			user_add2 = #{userAdd2},
+			user_add3 = #{userAdd3}
+		WHERE
+			user_idx = #{userIdx}
+	</update>
 </mapper>

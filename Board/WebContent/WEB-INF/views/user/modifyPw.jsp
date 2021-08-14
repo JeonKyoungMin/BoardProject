@@ -44,7 +44,7 @@
 			 </div>
 			<div class="card shadow">
 				<div class="card-body">
-				<form:form action="${root }user/modifyPw_pro" method='post' modelAttribute="userBean" name="modifyPwForm">
+				<form:form action="${root }user/modifyPw_pro" method='post' modelAttribute="modifyUserBean" name="modifyPwForm">
 					<div class="form-group">
 						<form:label path="userName">이름</form:label>
 						<form:input path="userName" class='form-control' readonly='true'/>

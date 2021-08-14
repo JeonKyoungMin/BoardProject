@@ -14,6 +14,9 @@ public class UserValidator implements Validator {
 		return UserBean.class.isAssignableFrom(clazz);
 	}
 	
+	/**
+	 * <p>각각의 BeanName에 따라 입력값 Validation Check</p>
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		UserBean userBean = (UserBean)target;
@@ -29,8 +32,13 @@ public class UserValidator implements Validator {
 			if (userBean.isUserIdExist() == false) {
 				errors.rejectValue("userId", "DontCheckUserIdExist");
 			}
+		} else if (beanName.equals("modifyUserBean")) {
+			if (userBean.getUserPw().equals(userBean.getUserPw2()) == false) {
+				errors.rejectValue("userPw", "NotEquals");
+				errors.rejectValue("userPw2", "NotEquals");
+			}
+
 		}
-		
 	}
 }
 

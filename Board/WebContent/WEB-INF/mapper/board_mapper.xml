@@ -3,4 +3,25 @@
 					    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
+	<resultMap id="ContentResult" type="com.board.beans.ContentBean" >
+		<id property="contentIdx" column="content_idx"/>
+		<result property="contentTtl" column="content_ttl"/>
+		<result property="contentCont" column="content_cont"/>
+		<result property="contentFile" column="content_file"/>
+		<result property="contentWriterIdx" column="content_writer_idx"/>
+		<result property="contentBoardIdx" column="content_board_idx"/>
+		<result property="contentYmd" column="content_ymd"/>
+	</resultMap>
+	
+	<select id="selectContentList" parameterType="com.board.beans.ContentBean" resultMap="ContentResult">
+		SELECT 
+			content_idx
+		FROM 
+			content_table
+		WHERE
+		 	content_writer_idx = 2
+		AND
+			content_board_idx = 1
+	</select>
+	
 </mapper>
