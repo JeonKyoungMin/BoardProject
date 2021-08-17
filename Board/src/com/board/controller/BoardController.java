@@ -1,5 +1,7 @@
 package com.board.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,14 @@ public class BoardController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(@RequestParam("boardInfoIdx") int boardInfoIdx, ContentBean contentBean,
 			Model model) {
+		String result = boardService.getBoardInfo(boardInfoIdx);
+
+		List<ContentBean> contentList= boardService.getContentList(boardInfoIdx);
+		
+		model.addAttribute("contentList", contentList);
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
+		model.addAttribute("boardInfoName", result);
+		
 		
 		return "board/main";
 	}
@@ -34,7 +43,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String write(ContentBean contentBean) {
+	public String write(@RequestParam("boardInfoIdx") int boardInfoIdx,
+			ContentBean contentBean) {
+		contentBean.setContentBoardIdx(boardInfoIdx);
+		
 		return "board/write";
 	}
 	
@@ -44,9 +56,9 @@ public class BoardController {
 			
 			return "board/write";
 		} else {
-			boardService.addContentInfo(contentBean);
+			boardService.insertContent(contentBean);
 			
-			return "board/main";
+			return "board/read";
 		}
 		
 	}

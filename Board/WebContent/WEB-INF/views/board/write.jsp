@@ -15,6 +15,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
+<script type="text/javascript">
+	function writePro() {
+		if (document.writeForm.contentTtl.value == ""){
+			document.writeForm.contentTtl.focus();
+		} else if (document.writeForm.contentCont.value == "") {
+			document.writeForm.contentCont.focus();
+		} else {
+			if (confirm("글을 작성하시겠습니까?") == true) {
+				document.writeForm.submit();
+			} else {
+				return false;
+			}
+		}
+	}
+</script>
 <body>
 
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
@@ -26,27 +41,27 @@
 			<div class="card shadow">
 				<div class="card-body">
 					<form:form action="${root }board/write_pro" method="post" name="writeForm" modelAttribute="contentBean" enctype="multipart/form-data">
-					<div class="form-group">
-						<form:label path="contentTtl">제목</form:label>
-						<form:input path="contentTtl" class="form-control"/>
-						<form:errors path="contentTtl" style="color:red;"/>
-					</div>
-					<div class="form-group">
-						<form:label path="contentCont">내용</form:label>
-						<form:textarea path="contentCont" class="form-control" rows="10" style="resize:none"/>
-						<form:errors path="contentCont" style="color:red;"/>
-					</div>
-					<div class="form-group">
-						<form:label path="uploadFile">첨부 파일</form:label>
-						<form:input type="file" path="uploadFile" class="form-control" accept="image/*" />
-					</div>
-					<div class="form-group">
-						<div class="text-right">
-							<form:button class="btn btn-primary">작성하기</form:button>
+						<form:hidden path="contentBoardIdx"/>
+						<div class="form-group">
+							<form:label path="contentTtl">제목</form:label>
+							<form:input path="contentTtl" class="form-control"/>
+							<form:errors path="contentTtl" style="color:red;"/>
 						</div>
-					</div>
-					
+						<div class="form-group">
+							<form:label path="contentCont">내용</form:label>
+							<form:textarea path="contentCont" class="form-control" rows="10" style="resize:none"/>
+							<form:errors path="contentCont" style="color:red;"/>
+						</div>
+						<div class="form-group">
+							<form:label path="uploadFile">첨부 파일</form:label>
+							<form:input type="file" path="uploadFile" class="form-control" accept="image/*" />
+						</div>
 					</form:form>
+						<div class="form-group">
+							<div class="text-right">
+								<button class="btn btn-primary" onclick="writePro()">작성하기</button>
+							</div>
+						</div>
 				</div>
 			</div>
 		</div>

@@ -11,17 +11,51 @@
 		<result property="contentWriterIdx" column="content_writer_idx"/>
 		<result property="contentBoardIdx" column="content_board_idx"/>
 		<result property="contentYmd" column="content_ymd"/>
+		<result property="contentWriterName" column="content_writer_name"/>
 	</resultMap>
 	
-	<select id="selectContentList" parameterType="com.board.beans.ContentBean" resultMap="ContentResult">
-		SELECT 
-			content_idx
+	<sql id="Cols">
+		content_ttl,
+		content_cont,
+		content_file,
+		content_writer_idx,
+		content_board_idx,
+		content_ymd
+	</sql>
+	
+	<sql id="listCols">
+		content_idx,
+		<include refid="Cols"/>
+	</sql>
+	
+	<insert id="insertContent" parameterType="com.board.beans.ContentBean" useGeneratedKeys="true" keyProperty="">
+		INSERT INTO
+			content_table (<include refid="Cols"></include>)
+		VALUES
+			(#{contentTtl}, #{contentCont}, #{contentFile, jdbcType=VARCHAR}, #{contentWriterIdx},
+			 #{contentBoardIdx}, current_timestamp() )
+	</insert>
+	
+	<select id="getBoardInfo" parameterType="java.lang.Integer" resultType="java.lang.String">
+		SELECT
+			board_info_name
 		FROM 
-			content_table
+			board_info_table
 		WHERE
-		 	content_writer_idx = 2
-		AND
-			content_board_idx = 1
+			board_info_idx = #{boardInfoIdx}
 	</select>
 	
+	<select id="getContentList" parameterType="java.lang.Integer" resultMap="ContentResult">
+		SELECT
+			a1.content_idx, a1.content_ttl, a2.user_name as content_writer_name,
+			date_format(a1.content_ymd,"%y-%m-%d") as content_ymd
+		FROM
+			content_table a1, user_table a2
+		WHERE
+			a1.content_writer_idx = a2.user_idx
+			and a1.content_board_idx = #{board_info_idx}
+		ORDER BY
+			a1.content_idx desc;
+	</select>
+
 </mapper>
