@@ -7,20 +7,17 @@ import com.board.beans.ContentBean;
 import com.board.dao.BoardDao;
 
 @Service
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDao boardDao;
-	
-	public boolean selectContentList(ContentBean contentBean) {
-		ContentBean result = boardDao.selectContentList(contentBean);
+
+	@Override
+	public void addContentInfo(ContentBean contentBean) {
 		
-		if (result == null){
-			
-			return false;
-		} else {
-			
-			return true;
-		}
+		System.out.println(contentBean.getContentCont());
+		System.out.println(contentBean.getContentTtl());
+		System.out.println(contentBean.getUploadFile().getSize());
+		
 	}
 }

@@ -78,4 +78,6 @@
 		<beans:constructor-arg ref='messageSource'/>
 	</beans:bean>
 	
+	<beans:bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver"
+			id="multipartResolver" />
 </beans:beans>			
