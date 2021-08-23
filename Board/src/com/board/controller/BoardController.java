@@ -2,9 +2,11 @@ package com.board.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.beans.ContentBean;
+import com.board.beans.UserBean;
 import com.board.service.BoardService;
 
 @Controller
@@ -21,6 +24,10 @@ public class BoardController {
 	
 	@Autowired	
 	private BoardService boardService;
+	
+	@Resource(name = "loginUserBean")
+	@Lazy
+	private UserBean loginUserBean;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(@RequestParam("boardInfoIdx") int boardInfoIdx, ContentBean contentBean,
@@ -38,7 +45,15 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public String read() {
+	public String read(@RequestParam("boardInfoIdx") int boardInfoIdx,
+					   @RequestParam("contentIdx") int contentIdx, Model model) {
+		ContentBean result = boardService.getContentInfo(contentIdx);
+		
+		model.addAttribute("boardInfoIdx", boardInfoIdx);
+		model.addAttribute("contentIdx", contentIdx);
+		model.addAttribute("result", result);
+		model.addAttribute("loginUserBean", loginUserBean);
+		
 		return "board/read";
 	}
 	
@@ -58,7 +73,7 @@ public class BoardController {
 		} else {
 			boardService.insertContent(contentBean);
 			
-			return "board/read";
+			return "main";
 		}
 		
 	}
@@ -67,9 +82,14 @@ public class BoardController {
 		return "board/modify";
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete() {
 		return "redirect:/board/main";
 	}
 
+	@RequestMapping(value = "/not_writer", method = RequestMethod.GET)
+	public String not_writer() {
+		
+		return "board/not_writer";
+	}
 }

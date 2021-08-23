@@ -55,7 +55,18 @@
 			a1.content_writer_idx = a2.user_idx
 			and a1.content_board_idx = #{board_info_idx}
 		ORDER BY
-			a1.content_idx desc;
+			a1.content_idx desc
 	</select>
 
+	<select id="getContentInfo" parameterType="java.lang.Integer" resultMap="ContentResult">
+		SELECT
+			a2.user_name as content_writer_name, date_format(a1.content_ymd,"%y-%m-%d") as content_ymd,
+			a1.content_ttl, a1.content_cont, a1.content_file, a1.content_writer_idx
+		FROM
+			content_table a1, user_table a2
+		WHERE
+			a1.content_writer_idx = a2.user_idx
+		AND	
+			content_idx = #{contentIdx}
+	</select>
 </mapper>

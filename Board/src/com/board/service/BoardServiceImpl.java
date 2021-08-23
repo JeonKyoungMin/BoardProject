@@ -72,4 +72,11 @@ public class BoardServiceImpl implements BoardService {
 		
 		return result;
 	}
+	
+	@Override
+	public ContentBean getContentInfo(int contentIdx) {
+		ContentBean result = boardDao.getContentInfo(contentIdx);
+		
+		return result;
+	}
 }

@@ -64,6 +64,11 @@
 			<exclude-mapping path="/board/main"/>
 			<beans:bean class="com.board.interceptor.CheckLoginInterceptor"/>
 		</interceptor>
+		<interceptor>
+			<mapping path="/board/modify"/>
+			<mapping path="/board/delete"/>
+			<beans:bean class="com.board.interceptor.CheckWriterInterceptor"/>
+		</interceptor>
 	</interceptors>
 	
 	<beans:bean class='org.springframework.context.support.ReloadableResourceBundleMessageSource' id='messageSource'>

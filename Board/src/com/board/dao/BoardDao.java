@@ -14,4 +14,6 @@ public interface BoardDao {
 	public String getBoardInfo(int boardInfoIdx);
 	
 	public List<ContentBean> getContentList(int boardInfoIdx);
+	
+	public ContentBean getContentInfo(int contentIdx);
 }

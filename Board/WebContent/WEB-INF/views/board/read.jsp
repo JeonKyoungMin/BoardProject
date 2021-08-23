@@ -16,27 +16,21 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		var formObj = $("form[name='readForm']");
+
+		$(".list_btn").on("click", function() {
+			location.href = "/board/main?boardInfoIdx=${boardInfoIdx}";
+		});
 		
 		$(".update_btn").on("click", function() {
-			formObj.attr("action", "/board/modify");
-			formObj.attr("method", "get");
-			formObj.submit();
-		})
-	
-		$(".delete_btn").on("click", function(){
-			if (confirm("삭제하시겠습니까?")) {
-				formObj.attr("action", "/board/delete");
-				formObj.attr("method", "post");
-				formObj.submit();
-			}
+			location.href = "/board/modify?contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}"
 		})
 		
-		$(".list_btn").on("click", function() {
-			location.href = "/board/main";
+		$(".delete_btn").on("click", function() {
+			location.href = "/board/delete?contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}"
 		})
-		
 	})
+	
+	
 </script>
 
 </head>
@@ -51,35 +45,36 @@
 			<div class="card shadow">
 				<div class="card-body">
 					<div class="form-group">
-						<form name="readForm" role="form" method="post">
-						</form>
 						<label for="board_writer_name">작성자</label>
-						<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="홍길동" disabled="disabled"/>
+						<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="${result.contentWriterName }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_date">작성날짜</label>
-						<input type="text" id="board_date" name="board_date" class="form-control" value="2018-7-20" disabled="disabled"/>
+						<input type="text" id="board_date" name="board_date" class="form-control" value="${result.contentYmd }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_subject">제목</label>
-						<input type="text" id="board_subject" name="board_subject" class="form-control" value="제목입니다" disabled="disabled"/>
+						<input type="text" id="board_subject" name="board_subject" class="form-control" value="${result.contentTtl }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_content">내용</label>
-						<textarea id="board_content" name="board_content" class="form-control" rows="10" style="resize:none" disabled="disabled">본문입니다</textarea>
+						<textarea id="board_content" name="board_content" class="form-control" rows="10" style="resize:none" disabled="disabled">${result.contentCont }</textarea>
 					</div>
-					<div class="form-group">
-						<label for="board_file">첨부 이미지</label>
-						<img src="${root }image/Unknown005656.jpg" width="100%"/>						
-					</div>
+					
+					<c:if test="${result.contentFile != null }">
+						<div class="form-group">
+							<label for="board_file">첨부 이미지</label>
+							<img src="${root }upload/${result.contentFile}" width="80%"/>						
+						</div>
+					</c:if>
+					
 					<div class="form-group">
 						<div class="text-right">
-<%-- 							<a href="${root }board/main" class="btn btn-primary">목록보기</a> --%>
-<%-- 							<a href="${root }board/modify" class="btn btn-info">수정하기</a> --%>
-<%-- 							<a href="${root }board/delete" class="btn btn-danger">삭제하기</a> --%>
 								<button type="button" class="list_btn btn btn-primary">목록</button>
-								<button type="button" class="update_btn btn btn-warning">수정</button>
-								<button type="button" class="delete_btn btn btn-danger">삭제</button>
+								<c:if test="${loginUserBean.userIdx == result.contentWriterIdx }">
+									<button type="button" class="update_btn btn btn-warning">수정</button>
+									<button type="button" class="delete_btn btn btn-danger">삭제</button>
+								</c:if>
 						</div>
 					</div>
 				</div>

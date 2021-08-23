@@ -33,4 +33,10 @@ public class BoardDaoImpl implements BoardDao {
 		return result;
 	}
 	
+	@Override
+	public ContentBean getContentInfo(int contentIdx) {
+		ContentBean result = sqlSessionTemplate.selectOne("board.getContentInfo", contentIdx);
+		
+		return result;
+	}
 }
