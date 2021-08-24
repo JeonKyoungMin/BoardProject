@@ -78,7 +78,13 @@ public class BoardController {
 		
 	}
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String modify() {
+	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,
+						@RequestParam("contentIdx") int contentIdx, ContentBean contentBean,
+						Model model) {
+		
+		ContentBean result = boardService.getContentInfo(contentIdx);
+		model.addAttribute("result", result);
+		
 		return "board/modify";
 	}
 	
