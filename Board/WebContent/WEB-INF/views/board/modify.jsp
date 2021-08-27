@@ -14,6 +14,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".list_btn").on("click", function() {
+			location.href="${root }board/read?boardInfoIdx=${boardInfoIdx}&contentIdx=${contentIdx}";
+		});
+	})
+</script>
+
 <body>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 <div class="container" style="margin-top:100px">
@@ -22,7 +30,7 @@
 		<div class="col-sm-6">
 			<div class="card shadow">
 				<div class="card-body">
-					<form:form action='${root }board/modify_pro' method='post' name="contentBean" enctype="multipart/form-data"> 
+					<form:form action='${root }board/modify_pro' method='post' modelAttribute="contentBean" enctype="multipart/form-data"> 
 						<form:hidden path="contentIdx"/>
 						<form:hidden path="contentBoardIdx"/>
 						<div class="form-group">
@@ -45,16 +53,16 @@
 						</div>
 						<div class="form-group">
 							<form:label path="contentFile">첨부파일</form:label>
-							<c:if test="${contentBean.content_file != null }">
+							<c:if test="${contentBean.contentFile != null }">
 								<img src="${root }upload/${contentBean.contentFile}" width="80%"/>	
-								<form:hidden path="content_file"/>
+								<form:hidden path="contentFile"/>
 							</c:if>
 							<form:input path="uploadFile" type='file' class='form-control' accept= 'image/*'/>
 						</div>
 						<div class="form-group">
 							<div class="text-right">
-								<form:button class='btn btn-primary'>수정완료</form:button>							
-								<a href="${root }board/read?boardInfoIdx=${boardInfoIdx}&contentIdx=${contentIdx}" class="btn btn-info">취소</a>
+								<form:button class='btn btn-primary'>수정완료</form:button>	
+								<button type="button" class="list_btn btn btn-primary">목록</button>
 							</div>
 						</div>
 					</form:form>

@@ -69,4 +69,15 @@
 		AND	
 			content_idx = #{contentIdx}
 	</select>
+	
+	<update id="modifyContent" parameterType="com.board.beans.ContentBean">
+		UPDATE
+			content_table
+		SET
+			content_ttl = #{contentTtl},
+			content_cont = #{contentCont},
+			content_file = #{contentFile, jdbcType=VARCHAR}
+		WHERE
+			content_idx = #{contentIdx}
+	</update>
 </mapper>

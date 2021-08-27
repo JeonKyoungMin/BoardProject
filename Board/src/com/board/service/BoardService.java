@@ -17,4 +17,6 @@ public interface BoardService {
 	public List<ContentBean> getContentList(int boardInfoIdx);
 
 	public ContentBean getContentInfo(int contentIdx);
+	
+	public void modifyContent(ContentBean contentBean);
 }

@@ -81,11 +81,35 @@ public class BoardController {
 	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,
 						@RequestParam("contentIdx") int contentIdx, ContentBean contentBean,
 						Model model) {
+		model.addAttribute("boardInfoIdx", boardInfoIdx);
+		model.addAttribute("contentIdx", contentIdx);
 		
 		ContentBean result = boardService.getContentInfo(contentIdx);
-		model.addAttribute("result", result);
+		
+		contentBean.setContentWriterName(result.getContentWriterName());
+		contentBean.setContentYmd(result.getContentYmd());
+		contentBean.setContentTtl(result.getContentTtl());
+		contentBean.setContentCont(result.getContentCont());
+		contentBean.setContentFile(result.getContentFile());
+		contentBean.setContentIdx(result.getContentWriterIdx());
+		contentBean.setContentBoardIdx(boardInfoIdx);
+		contentBean.setContentIdx(contentIdx);
 		
 		return "board/modify";
+	}
+	
+	@RequestMapping(value = "/modify_pro", method= RequestMethod.POST)
+	public String modify_pro(@Valid ContentBean contentBean, BindingResult result) {
+		
+		if (result.hasErrors()) {
+			
+			return "/board/modify";
+		} else {
+			boardService.modifyContent(contentBean);
+
+			return "board/modify_success";
+		}
+		
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)

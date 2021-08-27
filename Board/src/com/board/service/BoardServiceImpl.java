@@ -79,4 +79,18 @@ public class BoardServiceImpl implements BoardService {
 		
 		return result;
 	}
+	
+	@Override
+	public void modifyContent(ContentBean contentBean) {
+		
+		MultipartFile uploadFile = contentBean.getUploadFile();
+		
+		if (uploadFile.getSize() > 0) {
+			String fileName = saveUploadFile(uploadFile);
+			contentBean.setContentFile(fileName);
+		}
+		
+		boardDao.modifyContent(contentBean);
+	}
 }
+

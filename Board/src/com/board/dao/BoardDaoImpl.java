@@ -39,4 +39,10 @@ public class BoardDaoImpl implements BoardDao {
 		
 		return result;
 	}
+	
+	@Override
+	public void modifyContent(ContentBean contentBean) {
+		
+		sqlSessionTemplate.update("board.modifyContent", contentBean);
+	}
 }
