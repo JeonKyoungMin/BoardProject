@@ -45,4 +45,10 @@ public class BoardDaoImpl implements BoardDao {
 		
 		sqlSessionTemplate.update("board.modifyContent", contentBean);
 	}
+	
+	@Override
+	public void deleteContent(int contentIdx) {
+		
+		sqlSessionTemplate.delete("board.deleteContent", contentIdx);
+	}
 }

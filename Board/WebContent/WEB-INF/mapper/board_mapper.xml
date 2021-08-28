@@ -80,4 +80,11 @@
 		WHERE
 			content_idx = #{contentIdx}
 	</update>
+	
+	<delete id="deleteContent" parameterType="java.lang.Integer">
+		DELETE FROM
+			content_table
+		WHERE
+			content_idx = #{contentIdx}
+	</delete>
 </mapper>

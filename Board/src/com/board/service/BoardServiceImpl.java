@@ -92,5 +92,11 @@ public class BoardServiceImpl implements BoardService {
 		
 		boardDao.modifyContent(contentBean);
 	}
+	
+	@Override
+	public void deleteContent(int contentIdx) {
+		
+		boardDao.deleteContent(contentIdx);
+	}
 }
 

@@ -113,8 +113,13 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete() {
-		return "redirect:/board/main";
+	public String delete(@RequestParam("boardInfoIdx")int boardInfoIdx,
+						 @RequestParam("contentIdx")int contentIdx, Model model) {
+		boardService.deleteContent(contentIdx);
+		
+		model.addAttribute("boardInfoIdx", boardInfoIdx);
+		
+		return "board/delete";
 	}
 
 	@RequestMapping(value = "/not_writer", method = RequestMethod.GET)

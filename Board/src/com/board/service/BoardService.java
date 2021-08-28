@@ -19,4 +19,6 @@ public interface BoardService {
 	public ContentBean getContentInfo(int contentIdx);
 	
 	public void modifyContent(ContentBean contentBean);
+	
+	public void deleteContent(int contentIdx);
 }
