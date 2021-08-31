@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.beans.ContentBean;
+import com.board.beans.PageBean;
 import com.board.beans.UserBean;
 import com.board.service.BoardService;
 
@@ -30,16 +31,20 @@ public class BoardController {
 	private UserBean loginUserBean;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(@RequestParam("boardInfoIdx") int boardInfoIdx, ContentBean contentBean,
+	public String main(@RequestParam("boardInfoIdx") int boardInfoIdx,
+					   @RequestParam(value = "page", defaultValue = "1") int page,
+					   ContentBean contentBean,
 			Model model) {
-		String result = boardService.getBoardInfo(boardInfoIdx);
-
-		List<ContentBean> contentList= boardService.getContentList(boardInfoIdx);
-		
-		model.addAttribute("contentList", contentList);
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
+
+		String result = boardService.getBoardInfo(boardInfoIdx);
 		model.addAttribute("boardInfoName", result);
+
+		List<ContentBean> contentList= boardService.getContentList(boardInfoIdx, page);
+		model.addAttribute("contentList", contentList);
 		
+		PageBean pageBean = boardService.getContentCnt(boardInfoIdx, page);
+		model.addAttribute("pageBean", pageBean);
 		
 		return "board/main";
 	}

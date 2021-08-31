@@ -28,12 +28,12 @@
 		<include refid="Cols"/>
 	</sql>
 	
-	<insert id="insertContent" parameterType="com.board.beans.ContentBean" useGeneratedKeys="true" keyProperty="">
+	<insert id="insertContent" parameterType="com.board.beans.ContentBean" useGeneratedKeys="true">
 		INSERT INTO
 			content_table (<include refid="Cols"></include>)
 		VALUES
 			(#{contentTtl}, #{contentCont}, #{contentFile, jdbcType=VARCHAR}, #{contentWriterIdx},
-			 #{contentBoardIdx}, current_timestamp() )
+			 #{contentBoardIdx}, current_timestamp())
 	</insert>
 	
 	<select id="getBoardInfo" parameterType="java.lang.Integer" resultType="java.lang.String">
@@ -87,4 +87,13 @@
 		WHERE
 			content_idx = #{contentIdx}
 	</delete>
+	
+	<select id="getContentCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT 
+			count(*)
+		FROM
+			content_table
+		WHERE
+			content_board_idx = #{contentBoardIdx}
+	</select>
 </mapper>

@@ -2,6 +2,7 @@ package com.board.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,8 +28,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public List<ContentBean> getContentList(int boardInfoIdx) {
-		List<ContentBean> result = sqlSessionTemplate.selectList("board.getContentList", boardInfoIdx);
+	public List<ContentBean> getContentList(int boardInfoIdx, RowBounds rowBounds) {
+		List<ContentBean> result = sqlSessionTemplate.selectList("board.getContentList", boardInfoIdx, rowBounds);
 		
 		return result;
 	}
@@ -50,5 +51,12 @@ public class BoardDaoImpl implements BoardDao {
 	public void deleteContent(int contentIdx) {
 		
 		sqlSessionTemplate.delete("board.deleteContent", contentIdx);
+	}
+	
+	@Override
+	public int getContentCnt(int contentBoardIdx) {
+		int result = sqlSessionTemplate.selectOne("board.getContentCnt", contentBoardIdx);
+		
+		return result;
 	}
 }
