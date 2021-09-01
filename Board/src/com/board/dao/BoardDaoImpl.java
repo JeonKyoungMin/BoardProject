@@ -2,6 +2,7 @@ package com.board.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,4 +60,5 @@ public class BoardDaoImpl implements BoardDao {
 		
 		return result;
 	}
+	
 }

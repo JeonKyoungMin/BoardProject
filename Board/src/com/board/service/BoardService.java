@@ -2,6 +2,7 @@ package com.board.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 
 import com.board.beans.ContentBean;
@@ -23,4 +24,5 @@ public interface BoardService {
 	public void deleteContent(int contentIdx);
 	
 	public PageBean getContentCnt(int contentBoardIdx, int currentPage);
+	
 }

@@ -4,6 +4,6 @@
 <c:set var="root" value="${pageContext.request.contextPath }/" />
 
 <script>
-	alert("수정되었습니다.")
-	location.href="${root}board/read?boardInfoIdx=${contentBean.contentBoardIdx}&contentIdx=${contentBean.contentIdx}&page=${page}"
+	alert("작성되었습니다.")
+	location.href="${root}board/main?boardInfoIdx=${contentBean.contentBoardIdx}&page=1"
 </script>

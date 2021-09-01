@@ -28,6 +28,14 @@
 		<include refid="Cols"/>
 	</sql>
 	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND content_ttl LIKE '%' || #{keyword} || '%' </if>
+			<if test="searchType == 'c'.toString()">AND content_cont LIKE '%' || #{keyword} || '%' </if>
+			<if test="searchType == 'tc'.toString()">AND (content_ttl LIKE '%' || #{keyword} || '%') or (content_cont LIKE '%' || #{keyword} || '%') </if>
+		</if>
+	</sql>
+	
 	<insert id="insertContent" parameterType="com.board.beans.ContentBean" useGeneratedKeys="true">
 		INSERT INTO
 			content_table (<include refid="Cols"></include>)
@@ -96,4 +104,5 @@
 		WHERE
 			content_board_idx = #{contentBoardIdx}
 	</select>
+	
 </mapper>

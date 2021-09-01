@@ -2,6 +2,7 @@ package com.board.controller;
 
 import java.util.List;
 
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -45,47 +46,54 @@ public class BoardController {
 		
 		PageBean pageBean = boardService.getContentCnt(boardInfoIdx, page);
 		model.addAttribute("pageBean", pageBean);
+		model.addAttribute("page", page);
 		
 		return "board/main";
 	}
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("boardInfoIdx") int boardInfoIdx,
-					   @RequestParam("contentIdx") int contentIdx, Model model) {
-		ContentBean result = boardService.getContentInfo(contentIdx);
-		
+					   @RequestParam("contentIdx") int contentIdx,
+					   @RequestParam("page") int page, 
+					   Model model) {
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		model.addAttribute("contentIdx", contentIdx);
+
+		ContentBean result = boardService.getContentInfo(contentIdx);
 		model.addAttribute("result", result);
 		model.addAttribute("loginUserBean", loginUserBean);
+		model.addAttribute("page", page);
 		
 		return "board/read";
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write(@RequestParam("boardInfoIdx") int boardInfoIdx,
-			ContentBean contentBean) {
+			ContentBean contentBean, Model model) {
 		contentBean.setContentBoardIdx(boardInfoIdx);
-		
+		model.addAttribute("boardInfoIdx", boardInfoIdx);
+
 		return "board/write";
 	}
 	
 	@RequestMapping(value = "/write_pro", method = RequestMethod.POST)
-	public String write_pro (@Valid ContentBean contentBean, BindingResult result) {
+	public String write_pro (@Valid ContentBean contentBean, Model model ,BindingResult result) {
+		
 		if (result.hasErrors()) {
 			
 			return "board/write";
 		} else {
 			boardService.insertContent(contentBean);
 			
-			return "main";
+			return "board/write_success";
 		}
 		
 	}
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,
-						@RequestParam("contentIdx") int contentIdx, ContentBean contentBean,
-						Model model) {
+						@RequestParam("contentIdx") int contentIdx, 
+						@RequestParam("page") int page,
+						ContentBean contentBean, Model model) {
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		model.addAttribute("contentIdx", contentIdx);
 		
@@ -100,11 +108,16 @@ public class BoardController {
 		contentBean.setContentBoardIdx(boardInfoIdx);
 		contentBean.setContentIdx(contentIdx);
 		
+		model.addAttribute("page", page);
+		
 		return "board/modify";
 	}
 	
 	@RequestMapping(value = "/modify_pro", method= RequestMethod.POST)
-	public String modify_pro(@Valid ContentBean contentBean, BindingResult result) {
+	public String modify_pro(@Valid @RequestParam("page") int page,
+					ContentBean contentBean, Model model,BindingResult result) {
+		
+		model.addAttribute("page", page);
 		
 		if (result.hasErrors()) {
 			
@@ -132,4 +145,5 @@ public class BoardController {
 		
 		return "board/not_writer";
 	}
+	
 }

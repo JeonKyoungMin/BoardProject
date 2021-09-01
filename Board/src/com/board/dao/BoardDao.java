@@ -2,6 +2,7 @@ package com.board.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,5 @@ public interface BoardDao {
 	public void deleteContent(int contentIdx);
 	
 	public int getContentCnt(int contentBoardIdx);
+	
 }

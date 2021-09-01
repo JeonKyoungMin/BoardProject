@@ -18,11 +18,11 @@
 	$(document).ready(function() {
 
 		$(".list_btn").on("click", function() {
-			location.href = "/board/main?boardInfoIdx=${boardInfoIdx}";
+			location.href = "/board/main?boardInfoIdx=${boardInfoIdx}&page=${page}";
 		});
 		
 		$(".update_btn").on("click", function() {
-			location.href = "/board/modify?contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}"
+			location.href = "/board/modify?contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}&page=${page}"
 		})
 		
 		$(".delete_btn").on("click", function() {
@@ -65,6 +65,7 @@
 						<div class="form-group">
 							<label for="board_file">첨부 이미지</label>
 							<img src="${root }upload/${result.contentFile}" width="80%"/>						
+							<a href="${root }file_download?file=${result.contentFile}">${result.contentFile }</a>
 						</div>
 					</c:if>
 					

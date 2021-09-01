@@ -36,7 +36,7 @@
 					<c:forEach var="obj" items="${contentList }">
 						<tr>
 							<td class="text-center d-none d-md-table-cell">${obj.contentIdx }</td>
-							<td><a href='${root }board/read?boardInfoIdx=${boardInfoIdx}&contentIdx=${obj.contentIdx}'>${obj.contentTtl }</a></td>
+							<td><a href='${root }board/read?boardInfoIdx=${boardInfoIdx}&contentIdx=${obj.contentIdx}&page=${page}'>${obj.contentTtl }</a></td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentWriterName }</td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentYmd }</td>
 						</tr>
