@@ -2,7 +2,6 @@ package com.board.controller;
 
 import java.util.List;
 
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -19,6 +18,7 @@ import com.board.beans.ContentBean;
 import com.board.beans.PageBean;
 import com.board.beans.UserBean;
 import com.board.service.BoardService;
+import com.board.service.ReplyService;
 
 @Controller
 @RequestMapping("/board")
@@ -26,6 +26,9 @@ public class BoardController {
 	
 	@Autowired	
 	private BoardService boardService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	@Resource(name = "loginUserBean")
 	@Lazy
@@ -48,6 +51,10 @@ public class BoardController {
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("page", page);
 		
+		int result1 = replyService.countReply();
+		
+		System.out.println(result1);
+		
 		return "board/main";
 	}
 	
@@ -63,6 +70,7 @@ public class BoardController {
 		model.addAttribute("result", result);
 		model.addAttribute("loginUserBean", loginUserBean);
 		model.addAttribute("page", page);
+		
 		
 		return "board/read";
 	}

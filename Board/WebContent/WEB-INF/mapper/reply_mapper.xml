@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+					    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+
+	<resultMap id="replyResult" type="com.board.beans.ReplyBean" >
+		<id property="replyIdx" column="reply_idx"/>
+		<result property="replyBoardIdx" column="reply_board_idx"/>
+		<result property="replyContentIdx" column="reply_content_idx"/>
+		<result property="replyContent" column="reply_content"/>
+		<result property="replyWriter" column="reply_writer"/>
+		<result property="replyYmd" column="reply_ymd"/>
+	</resultMap>
+	
+	<select id="countReply" resultType="java.lang.Integer">
+		SELECT
+			count(reply_idx)
+		FROM
+			board_reply
+	</select>
+</mapper>
