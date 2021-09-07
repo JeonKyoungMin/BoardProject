@@ -1,6 +1,12 @@
 package com.board.dao;
 
+import java.util.List;
+
+import com.board.beans.ReplyBean;
+
 public interface ReplyDao {
 
-	public int countReply();
+	public List<ReplyBean> selectReply(ReplyBean replyBean);
+	
+	public void writeReply(ReplyBean replyBean);
 }

@@ -12,10 +12,35 @@
 		<result property="replyYmd" column="reply_ymd"/>
 	</resultMap>
 	
-	<select id="countReply" resultType="java.lang.Integer">
+	<sql id="Cols">
+		reply_board_idx,
+		reply_content_idx,
+		reply_content,
+		reply_writer
+	</sql>
+	
+	<sql id="listCols">
+		reply_idx,
+		reply_ymd,
+		<include refid="Cols"/>
+	</sql>
+	
+	<select id="selectReply" resultMap="replyResult" parameterType="com.board.beans.ReplyBean">
 		SELECT
-			count(reply_idx)
+			<include refid="listCols"/>
 		FROM
 			board_reply
+		WHERE
+			reply_board_idx = #{replyBoardIdx}
+		AND
+			reply_content_idx = #{replyContentIdx}
 	</select>
+	
+	<insert id="writeReply" parameterType="com.board.beans.ReplyBean">
+		INSERT INTO
+			board_reply(<include refid="Cols"/>)
+		VALUES
+			(#{replyBoardIdx}, #{replyContentIdx}, #{replyContent}, #{replyWriter})
+	</insert>
+	
 </mapper>

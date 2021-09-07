@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var='root' value='${pageContext.request.contextPath }/'/>
 <!DOCTYPE html>
 <html>
@@ -23,14 +25,23 @@
 		
 		$(".update_btn").on("click", function() {
 			location.href = "/board/modify?contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}&page=${page}"
-		})
+		});
 		
 		$(".delete_btn").on("click", function() {
 			location.href = "/board/delete?contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}"
-		})
+		});
+		
+		$(".write")
+		
 	})
 	
-	
+	function writeReply() {
+		if(confirm("댓글을 작성하시겠습니까?") == true) {
+			document.writeReply.submit();
+		} else {
+			return false;
+		}
+	}
 </script>
 
 </head>
@@ -77,6 +88,38 @@
 									<button type="button" class="delete_btn btn btn-danger">삭제</button>
 								</c:if>
 						</div>
+					</div>
+					<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top : 10px">
+							<form:form action='${root}board/write_reply' modelAttribute="replyBean" name="writeReply" method='post'>
+								<form:hidden path="replyBoardIdx"/>
+								<form:hidden path="replyContentIdx"/>
+								
+								<h6>댓글 작성</h6>	
+								<div class='row'>
+									<div class='col-sm-5'>
+										<form:input path="replyWriter" class='form-control' placeholder='작성자'/> 
+									</div>
+									<br><br>
+									<div class='col-sm-10'>
+										<form:textarea path="replyContent" class='form-control' rows='3'  placeholder='댓글을 입력해주세요'/>
+									</div>
+										<button class='write_btn btn-sm btn-primary' onclick="writeReply()">작성</button>
+								</div>							
+							</form:form>
+						</div>	
+						
+						<div class="form-group">
+							<label for="board_reply" class='label label-info'>댓글</label>
+							<c:forEach items="${replyList }" var="replyList">
+							<div class='my-3 p-3 bg-white rounded shadow-sm' >	
+								<p>
+									 작성자 : ${replyList.replyWriter } &nbsp;
+								   (<fmt:formatDate value="${replyList.replyYmd }" pattern="yyyy-MM-dd" />)
+								</p>
+								
+								<p>댓글 : ${replyList.replyContent }  </p>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

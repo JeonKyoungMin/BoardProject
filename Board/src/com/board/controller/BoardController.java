@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.beans.ContentBean;
 import com.board.beans.PageBean;
+import com.board.beans.ReplyBean;
 import com.board.beans.UserBean;
 import com.board.service.BoardService;
 import com.board.service.ReplyService;
@@ -51,18 +52,15 @@ public class BoardController {
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("page", page);
 		
-		int result1 = replyService.countReply();
-		
-		System.out.println(result1);
-		
 		return "board/main";
 	}
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("boardInfoIdx") int boardInfoIdx,
 					   @RequestParam("contentIdx") int contentIdx,
-					   @RequestParam("page") int page, 
-					   Model model) {
+					   @RequestParam("page") int page,
+					   ReplyBean replyBean, Model model) {
+
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		model.addAttribute("contentIdx", contentIdx);
 
@@ -71,6 +69,12 @@ public class BoardController {
 		model.addAttribute("loginUserBean", loginUserBean);
 		model.addAttribute("page", page);
 		
+		replyBean.setReplyBoardIdx(boardInfoIdx);
+		replyBean.setReplyContentIdx(contentIdx);
+		
+		List<ReplyBean> replyList = replyService.selectReply(replyBean);
+		
+		model.addAttribute("replyList", replyList);
 		
 		return "board/read";
 	}
@@ -85,7 +89,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/write_pro", method = RequestMethod.POST)
-	public String write_pro (@Valid ContentBean contentBean, Model model ,BindingResult result) {
+	public String write_pro(@Valid ContentBean contentBean, Model model ,BindingResult result) {
 		
 		if (result.hasErrors()) {
 			
@@ -95,8 +99,16 @@ public class BoardController {
 			
 			return "board/write_success";
 		}
-		
 	}
+	
+	@RequestMapping(value = "/write_reply", method = RequestMethod.POST)
+	public String write_reply(ReplyBean replyBean) {
+		
+		replyService.writeReply(replyBean);
+		
+		return "board/write_reply_success";
+	}
+	
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,
 						@RequestParam("contentIdx") int contentIdx, 
