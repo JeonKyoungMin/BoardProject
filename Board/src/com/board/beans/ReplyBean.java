@@ -20,4 +20,5 @@ public class ReplyBean {
 	public String replyWriter;
 	
 	public Date replyYmd;
+	public String replyPass;
 }
