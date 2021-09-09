@@ -105,4 +105,17 @@
 			content_board_idx = #{contentBoardIdx}
 	</select>
 	
+	<select id="listPage" resultMap="ContentResult">
+		SELECT
+			<include refid="listCols"/>
+		FROM
+			content_table
+		WHERE
+			content_idx > 0
+		ORDER BY
+			content_idx desc, content_ymd desc
+		LIMIT
+			#{pageStart}, #{perPageNum}
+	</select>
+	
 </mapper>

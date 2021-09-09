@@ -161,9 +161,11 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/not_writer", method = RequestMethod.GET)
-	public String not_writer() {
+	public String not_writer(@RequestParam("page") int page, 
+            @RequestParam("perPageNum") int perPageNum, ContentBean contentBean,
+            Model model) {
 		
 		return "board/not_writer";
 	}
-	
+		
 }
