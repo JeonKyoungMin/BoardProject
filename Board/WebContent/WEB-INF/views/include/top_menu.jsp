@@ -14,6 +14,7 @@
 			<c:forEach var='obj' items='${topMenuList}'>
 				<li class="nav-item">
 					<a href="${root }board/main?boardInfoIdx=${obj.boardInfoIdx}" class="nav-link">${obj.boardInfoName }</a>
+					<a href="${root }board/listPage?boardInfoIdx=${obj.boardInfoIdx}" class="nav-link">이동</a>
 				</li>
 			</c:forEach>
 		</ul>

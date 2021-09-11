@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.board.beans.ContentBean;
+import com.board.beans.Criteria;
 import com.board.beans.PageBean;
 import com.board.beans.UserBean;
 import com.board.dao.BoardDao;
@@ -121,5 +122,21 @@ public class BoardServiceImpl implements BoardService {
 		return pageBean;
 	}
 	
+//	paging 연습
+	
+	@Override
+	public List<ContentBean> listPage(Criteria cri) {
+		
+		List<ContentBean> result = boardDao.listPage(cri);
+		
+		return result;
+	}
+	
+	@Override
+	public int totalCount(Criteria cri) {
+		int result = boardDao.totalCount(cri);
+		
+		return result;
+	}
 }
 

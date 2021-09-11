@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.board.beans.ContentBean;
+import com.board.beans.Criteria;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -61,4 +62,20 @@ public class BoardDaoImpl implements BoardDao {
 		return result;
 	}
 	
+//	페이징 연습
+	
+	@Override
+	public List<ContentBean> listPage(Criteria cri) {
+		
+		List<ContentBean> result = sqlSessionTemplate.selectList("board.listPage", cri);
+		
+		return result;
+	}
+	
+	@Override
+	public int totalCount(Criteria cri) {
+		int result = sqlSessionTemplate.selectOne("board.totalCount", cri);
+		
+		return result;
+	}
 }

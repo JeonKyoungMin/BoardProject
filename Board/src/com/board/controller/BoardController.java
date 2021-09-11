@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.beans.ContentBean;
+import com.board.beans.Criteria;
 import com.board.beans.PageBean;
 import com.board.beans.ReplyBean;
 import com.board.beans.UserBean;
@@ -38,8 +39,7 @@ public class BoardController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(@RequestParam("boardInfoIdx") int boardInfoIdx,
 					   @RequestParam(value = "page", defaultValue = "1") int page,
-					   ContentBean contentBean,
-			Model model) {
+					   ContentBean contentBean, Model model) {
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 
 		String result = boardService.getBoardInfo(boardInfoIdx);
@@ -53,6 +53,31 @@ public class BoardController {
 		model.addAttribute("page", page);
 		
 		return "board/main";
+	}
+	
+	@RequestMapping(value= "/listPage", method= RequestMethod.GET)
+	public String list(@RequestParam("boardInfoIdx") int boardInfoIdx,
+					ContentBean contentBean, Criteria cri, Model model) {
+		
+		model.addAttribute("boardInfoIdx", boardInfoIdx);
+		
+		String result = boardService.getBoardInfo(boardInfoIdx);
+		model.addAttribute("boardInfoName", result);
+		
+//		cri.setPage(1);
+//		cri.setPerPageNum(10);
+//		List<ContentBean> contents = boardService.listPage(cri);
+//		for (ContentBean content : contents) {
+//			System.out.println("contentIdx : "+ content.getContentIdx() + "contentTtl" + content.getContentTtl());
+//		}
+		
+		int totalCount = boardService.totalCount(cri);
+		System.out.println(totalCount);
+		
+		List<ContentBean> contentList = boardService.listPage(cri);
+		model.addAttribute("contentList", contentList);
+		
+		return "board/listPage";
 	}
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)

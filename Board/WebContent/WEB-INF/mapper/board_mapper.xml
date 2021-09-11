@@ -105,17 +105,30 @@
 			content_board_idx = #{contentBoardIdx}
 	</select>
 	
-	<select id="listPage" resultMap="ContentResult">
+ 	<!-- paging 연습 -->
+	
+	<select id="listPage" parameterType="com.board.beans.Criteria" resultMap="ContentResult">
 		SELECT
 			<include refid="listCols"/>
 		FROM
 			content_table
 		WHERE
 			content_idx > 0
+		AND
+			content_board_idx = #{boardInfoIdx}
 		ORDER BY
 			content_idx desc, content_ymd desc
 		LIMIT
 			#{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="totalCount" resultType="java.lang.Integer">
+		SELECT
+			count(content_idx)
+		FROM
+			content_table
+		WHERE
+			content_board_idx = #{boardInfoIdx}
 	</select>
 	
 </mapper>

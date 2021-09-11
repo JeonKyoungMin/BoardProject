@@ -62,6 +62,7 @@
 			<mapping path="/board/**"/>
 			<mapping path="/user/delete"/>
 			<exclude-mapping path="/board/main"/>
+			<exclude-mapping path="/board/listPage"/>
 			<beans:bean class="com.board.interceptor.CheckLoginInterceptor"/>
 		</interceptor>
 		<interceptor>

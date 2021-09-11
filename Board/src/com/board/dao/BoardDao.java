@@ -2,11 +2,11 @@ package com.board.dao;
 
 import java.util.List;
 
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
 import com.board.beans.ContentBean;
+import com.board.beans.Criteria;
 
 /**
  * @author km
@@ -50,4 +50,9 @@ public interface BoardDao {
 	 */
 	public int getContentCnt(int contentBoardIdx);
 	
+//	페이징 연습
+	
+	public List<ContentBean> listPage(Criteria cri);
+	
+	public int totalCount(Criteria cri);
 }

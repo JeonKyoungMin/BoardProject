@@ -2,10 +2,10 @@ package com.board.service;
 
 import java.util.List;
 
-
 import org.springframework.stereotype.Service;
 
 import com.board.beans.ContentBean;
+import com.board.beans.Criteria;
 import com.board.beans.PageBean;
 
 /**
@@ -15,7 +15,6 @@ import com.board.beans.PageBean;
  */
 @Service
 public interface BoardService {
-	
 	
 	/**
 	 * <p>게시글 작성</p>
@@ -52,4 +51,9 @@ public interface BoardService {
 	 */
 	public PageBean getContentCnt(int contentBoardIdx, int currentPage);
 	
+//	페이징 연습
+	
+	public List<ContentBean> listPage(Criteria cri);
+
+	public int totalCount(Criteria cri);
 }
