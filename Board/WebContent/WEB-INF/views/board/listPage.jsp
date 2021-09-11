@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="root" value="${pageContext.request.contextPath }/"  />
 <!DOCTYPE html>
 <html>
@@ -36,13 +37,41 @@
 					<c:forEach var="obj" items="${contentList }">
 						<tr>
 							<td class="text-center d-none d-md-table-cell">${obj.contentIdx }</td>
-							<td><a href='${root }board/read?boardInfoIdx=${boardInfoIdx}&contentIdx=${obj.contentIdx}&page=${page}'>${obj.contentTtl }</a></td>
+							<td><a href='${root }board/readPage?${pageMaker.makeQuery(pageMaker.cri.page)}&boardInfoIdx=${boardInfoIdx}&contentIdx=${obj.contentIdx}'>${obj.contentTtl }</a></td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentWriterName }</td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentYmd }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<div class="d-none d-md-block">
+				<ul class="pagination justify-content-center">
+					<!-- prev 버튼 -->
+					<li class="page-item" id="page-prev">
+						<a href="listPage${pageMaker.makeQuery(pageMaker.startPage-1)}&boardInfoIdx=${boardInfoIdx}" aria-label="Prev">
+							<span aria-hidden="true">«</span>
+						</a>
+					</li>
+			
+					<!-- 페이지 번호 (시작 페이지 번호부터 끝 페이지 번호까지) -->
+					<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+					    <li class="page-item" id="page${idx}">
+				    		<a href="listPage${pageMaker.makeQuery(idx)}&boardInfoIdx=${boardInfoIdx}">
+				    		<!-- 시각 장애인을 위한 추가 -->
+				      			<span>${idx}<span class="sr-only">(current)</span></span>
+				    		</a>
+			    		</li>
+					</c:forEach>
+			
+					<!-- next 버튼 -->
+					<li class="page-item" id="page-next">
+					    <a href="listPage${pageMaker.makeQuery(pageMaker.endPage + 1)}&boardInfoIdx=${boardInfoIdx}" aria-label="Next">
+					    	<span aria-hidden="true">»</span>
+					    </a>
+					</li>
+				</ul>
+			</div>
 			
 			<div class="text-right">
 				<a href="${root }board/write?boardInfoIdx=${boardInfoIdx }" class="btn btn-primary">글쓰기</a>

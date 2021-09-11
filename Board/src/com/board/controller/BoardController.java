@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.board.beans.ContentBean;
 import com.board.beans.Criteria;
 import com.board.beans.PageBean;
+import com.board.beans.PageMaker;
 import com.board.beans.ReplyBean;
 import com.board.beans.UserBean;
 import com.board.service.BoardService;
@@ -57,25 +58,21 @@ public class BoardController {
 	
 	@RequestMapping(value= "/listPage", method= RequestMethod.GET)
 	public String list(@RequestParam("boardInfoIdx") int boardInfoIdx,
+					   @RequestParam(value = "page", defaultValue = "1") int page,
 					ContentBean contentBean, Criteria cri, Model model) {
 		
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		
 		String result = boardService.getBoardInfo(boardInfoIdx);
 		model.addAttribute("boardInfoName", result);
-		
-//		cri.setPage(1);
-//		cri.setPerPageNum(10);
-//		List<ContentBean> contents = boardService.listPage(cri);
-//		for (ContentBean content : contents) {
-//			System.out.println("contentIdx : "+ content.getContentIdx() + "contentTtl" + content.getContentTtl());
-//		}
-		
+
+		PageMaker pageMaker = new PageMaker(cri);
 		int totalCount = boardService.totalCount(cri);
-		System.out.println(totalCount);
+		pageMaker.setTotalCount(totalCount);
 		
 		List<ContentBean> contentList = boardService.listPage(cri);
 		model.addAttribute("contentList", contentList);
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "board/listPage";
 	}
@@ -83,7 +80,7 @@ public class BoardController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("boardInfoIdx") int boardInfoIdx,
 					   @RequestParam("contentIdx") int contentIdx,
-					   @RequestParam("page") int page,
+//					   @RequestParam("page") int page,
 					   ReplyBean replyBean, Model model) {
 
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
@@ -92,7 +89,7 @@ public class BoardController {
 		ContentBean result = boardService.getContentInfo(contentIdx);
 		model.addAttribute("result", result);
 		model.addAttribute("loginUserBean", loginUserBean);
-		model.addAttribute("page", page);
+//		model.addAttribute("page", page);
 		
 		replyBean.setReplyBoardIdx(boardInfoIdx);
 		replyBean.setReplyContentIdx(contentIdx);
@@ -102,6 +99,28 @@ public class BoardController {
 		model.addAttribute("replyList", replyList);
 		
 		return "board/read";
+	}
+	
+	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
+	public String readPage(@RequestParam("boardInfoIdx") int boardInfoIdx,
+			@RequestParam("contentIdx") int contentIdx,
+			ReplyBean replyBean, Model model) {
+		
+		model.addAttribute("boardInfoIdx", boardInfoIdx);
+		model.addAttribute("contentIdx", contentIdx);
+		
+		ContentBean result = boardService.getContentInfo(contentIdx);
+		model.addAttribute("result", result);
+		model.addAttribute("loginUserBean", loginUserBean);
+		
+		replyBean.setReplyBoardIdx(boardInfoIdx);
+		replyBean.setReplyContentIdx(contentIdx);
+		
+		List<ReplyBean> replyList = replyService.selectReply(replyBean);
+		
+		model.addAttribute("replyList", replyList);
+		
+		return "board/readPage";
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -137,7 +156,7 @@ public class BoardController {
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,
 						@RequestParam("contentIdx") int contentIdx, 
-						@RequestParam("page") int page,
+//						@RequestParam("page") int page,
 						ContentBean contentBean, Model model) {
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		model.addAttribute("contentIdx", contentIdx);
@@ -153,16 +172,13 @@ public class BoardController {
 		contentBean.setContentBoardIdx(boardInfoIdx);
 		contentBean.setContentIdx(contentIdx);
 		
-		model.addAttribute("page", page);
+//		model.addAttribute("page", page);
 		
 		return "board/modify";
 	}
 	
 	@RequestMapping(value = "/modify_pro", method= RequestMethod.POST)
-	public String modify_pro(@Valid @RequestParam("page") int page,
-					ContentBean contentBean, Model model,BindingResult result) {
-		
-		model.addAttribute("page", page);
+	public String modify_pro(@Valid ContentBean contentBean, Model model,BindingResult result) {
 		
 		if (result.hasErrors()) {
 			

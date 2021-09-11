@@ -17,7 +17,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".list_btn").on("click", function() {
-			location.href="${root }board/read?boardInfoIdx=${boardInfoIdx}&contentIdx=${contentIdx}&page=${page}";
+			location.href="${root }board/readPage?${cri.makeQuery()}&boardInfoIdx=${boardInfoIdx}&contentIdx=${contentIdx}&page=${page}";
 		});
 	})
 </script>
@@ -33,7 +33,6 @@
 					<form:form action='${root }board/modify_pro' method='post' modelAttribute="contentBean" enctype="multipart/form-data"> 
 						<form:hidden path="contentIdx"/>
 						<form:hidden path="contentBoardIdx"/>
-						<input type="hidden" name="page" value="${page }"> 
 						<div class="form-group">
 							<form:label path="contentWriterName">작성자</form:label>
 							<form:input path="contentWriterName" class='form-control' readonly="true"/>

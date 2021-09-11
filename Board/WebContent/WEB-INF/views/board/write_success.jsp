@@ -5,5 +5,5 @@
 
 <script>
 	alert("작성되었습니다.")
-	location.href="${root}board/main?boardInfoIdx=${contentBean.contentBoardIdx}&page=1"
+	location.href="${root}board/listPage?${cri.makeQuery()}&boardInfoIdx=${contentBean.contentBoardIdx}&page=1"
 </script>

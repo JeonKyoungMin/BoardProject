@@ -5,5 +5,5 @@
 
 <script>
 	alert("수정되었습니다.")
-	location.href="${root}board/read?boardInfoIdx=${contentBean.contentBoardIdx}&contentIdx=${contentBean.contentIdx}&page=${page}"
+	location.href="${root}board/readPage?${cri.makeQuery()}&boardInfoIdx=${contentBean.contentBoardIdx}&contentIdx=${contentBean.contentIdx}"
 </script>
