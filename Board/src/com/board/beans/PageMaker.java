@@ -1,6 +1,5 @@
 package com.board.beans;
 
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
@@ -51,12 +50,16 @@ public class PageMaker {
 	}
 	
 	public String makeQuery(int page) {
-		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+		UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance()
 				.queryParam("page", page)
-				.queryParam("perPageNum", this.cri.getPerPageNum())
-				.build()
-				.encode();
+				.queryParam("perPageNum", this.cri.getPerPageNum());
 		
-		return uriComponents.toString();
+		if (this.cri.getSearchType() != null) {
+			uriComponentsBuilder
+					.queryParam("searchType", this.cri.getSearchType())
+					.queryParam("keyWord", this.cri.getKeyWord());
+		}
+		
+		return uriComponentsBuilder.build().encode().toString();
 	}
 }

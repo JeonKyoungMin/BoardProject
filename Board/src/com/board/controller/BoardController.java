@@ -156,7 +156,6 @@ public class BoardController {
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,
 						@RequestParam("contentIdx") int contentIdx, 
-//						@RequestParam("page") int page,
 						ContentBean contentBean, Model model) {
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		model.addAttribute("contentIdx", contentIdx);
@@ -172,13 +171,11 @@ public class BoardController {
 		contentBean.setContentBoardIdx(boardInfoIdx);
 		contentBean.setContentIdx(contentIdx);
 		
-//		model.addAttribute("page", page);
-		
 		return "board/modify";
 	}
 	
 	@RequestMapping(value = "/modify_pro", method= RequestMethod.POST)
-	public String modify_pro(@Valid ContentBean contentBean, Model model,BindingResult result) {
+	public String modify_pro(@Valid ContentBean contentBean, Model model, BindingResult result) {
 		
 		if (result.hasErrors()) {
 			

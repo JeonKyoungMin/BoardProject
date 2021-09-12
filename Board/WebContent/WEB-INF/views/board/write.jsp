@@ -19,8 +19,12 @@
 	function writePro() {
 		if (document.writeForm.contentTtl.value == ""){
 			document.writeForm.contentTtl.focus();
+			alert("제목을 작성해주세요")
+			return false;
 		} else if (document.writeForm.contentCont.value == "") {
 			document.writeForm.contentCont.focus();
+			alert("내용을 작성해주세요")
+			return false;
 		} else {
 			if (confirm("글을 작성하시겠습니까?") == true) {
 				document.writeForm.submit();

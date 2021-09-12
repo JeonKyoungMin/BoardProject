@@ -20,7 +20,7 @@
 	$(document).ready(function() {
 
 		$(".list_btn").on("click", function() {
-			location.href = "/board/main?boardInfoIdx=${boardInfoIdx}&page=${page}";
+			location.href = "/board/listPage?boardInfoIdx=${boardInfoIdx}&page=${page}";
 		});
 		
 		$(".update_btn").on("click", function() {

@@ -2,17 +2,23 @@ package com.board.beans;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Criteria {
 	private int page;
 	private int perPageNum;
+	private String searchType;
+	private String keyWord;
 	private int boardInfoIdx;
 	
 	public Criteria() {
 		this.page = 1;
 		this.perPageNum = 10;
+		this.searchType = null;
+		this.keyWord = null;
 	}
     
 	//pageStart를 반환
@@ -40,15 +46,24 @@ public class Criteria {
 			this.perPageNum = perPageNum;
 		}
 	}
-	@Override
-	public String toString() {
-		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + "]";
-	}
 	
 	public String makeQuery() {
-		return UriComponentsBuilder.newInstance()
-						.queryParam("page", page)
-						.queryParam("perPageNum", perPageNum)
-						.build().encode().toString();
+		UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance()
+							.queryParam("page", page)
+							.queryParam("perPageNum", this.perPageNum);
+		
+		if (searchType != null) {
+			uriComponentsBuilder
+							.queryParam("searchType", this.searchType)
+							.queryParam("keyWord", this.keyWord);
+		}
+		return uriComponentsBuilder.build().encode().toString();
 	}
+	
+	@Override
+	public String toString() {
+		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", searchType=" + searchType + ", keyWord="
+				+ keyWord + "]";
+	}
+	
 }

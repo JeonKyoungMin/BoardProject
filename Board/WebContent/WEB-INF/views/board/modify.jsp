@@ -20,6 +20,24 @@
 			location.href="${root }board/readPage?${cri.makeQuery()}&boardInfoIdx=${boardInfoIdx}&contentIdx=${contentIdx}&page=${page}";
 		});
 	})
+	
+	function modifyPro() {
+		if (document.modifyForm.contentTtl.value == ""){
+			document.modifyForm.contentTtl.focus();
+			alert("제목을 작성해주세요")
+			return false;
+		} else if (document.modifyForm.contentCont.value == "") {
+			document.modifyForm.contentCont.focus();
+			alert("내용을 작성해주세요")
+			return false;
+		} else {
+			if (confirm("글을 수정하시겠습니까?") == true) {
+				document.modifyForm.submit();
+			} else {
+				return false;
+			}
+		}
+	}
 </script>
 
 <body>
@@ -30,7 +48,7 @@
 		<div class="col-sm-6">
 			<div class="card shadow">
 				<div class="card-body">
-					<form:form action='${root }board/modify_pro' method='post' modelAttribute="contentBean" enctype="multipart/form-data"> 
+					<form:form action='${root }board/modify_pro' method='post' name ="modifyForm" modelAttribute="contentBean" enctype="multipart/form-data"> 
 						<form:hidden path="contentIdx"/>
 						<form:hidden path="contentBoardIdx"/>
 						<div class="form-group">
@@ -59,13 +77,13 @@
 							</c:if>
 							<form:input path="uploadFile" type='file' class='form-control' accept= 'image/*'/>
 						</div>
+					</form:form>
 						<div class="form-group">
 							<div class="text-right">
-								<form:button class='btn btn-primary'>수정완료</form:button>	
+								<button class="btn btn-primary" onclick="modifyPro()">수정완료</button>
 								<button type="button" class="list_btn btn btn-primary">목록</button>
 							</div>
 						</div>
-					</form:form>
 				</div>
 			</div>
 		</div>

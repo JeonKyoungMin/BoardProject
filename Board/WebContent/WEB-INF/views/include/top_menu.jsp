@@ -17,7 +17,6 @@
 				</li>
 			</c:forEach>
 		</ul>
-		
 		<ul class="navbar-nav ml-auto">
 			<c:choose>
 				<c:when test="${loginUserBean.userLogin == true }">
