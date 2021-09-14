@@ -66,6 +66,7 @@ public class BoardServiceImpl implements BoardService {
 			//ContentBean file 객체에 임시파일 set
 			contentBean.setContentFile(fileName);
 		}
+		
 		boardDao.insertContent(contentBean);
 	}
 	

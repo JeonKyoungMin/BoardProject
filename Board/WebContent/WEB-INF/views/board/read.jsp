@@ -35,13 +35,27 @@
 		
 	})
 	
-	function writeReply() {
-		if(confirm("댓글을 작성하시겠습니까?") == true) {
-			document.writeReply.submit();
-		} else {
-			return false;
+		function writeReplyPro() {
+			if (document.writeReply.replyWriter.value == ""){
+				document.writeReply.replyWriter.focus();
+				alert("작성자를 작성해주세요")
+				return false;
+			} else if (document.writeReply.replyContent.value == "") {
+				document.writeReply.replyContent.focus();
+				alert("내용을 작성해주세요")
+				return false;
+			} else if (document.writeReply.replyPass.value == "") {
+				document.writeReply.replyPass.focus();
+				return false;
+			} else {
+				if (confirm("댓글을 작성하시겠습니까?") == true) {
+					document.writeReply.submit();
+				} else {
+					return false;
+				}
+			}
 		}
-	}
+		
 </script>
 
 </head>
@@ -105,10 +119,10 @@
 									<br><br>
 									<div class='col-sm-10'>
 										<form:textarea path="replyContent" class='form-control' rows='3'  placeholder='댓글을 입력해주세요'/>
-									</div>
-										<button class='write_btn btn-sm btn-primary' onclick="writeReply()">작성</button>
-								</div>							
+									</div>							
+								</div>
 							</form:form>
+								<button class='write_btn btn-sm btn-primary' onclick="writeReplyPro()">작성</button>
 						</div>	
 						
 						<div class="form-group">

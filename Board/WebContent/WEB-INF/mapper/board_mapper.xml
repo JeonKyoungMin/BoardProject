@@ -31,15 +31,15 @@
 	<sql id="searchCondition">
 		<if test="searchType != null">
 			<if test="searchType == 't'.toString()">
-				AND content_ttl LIKE '%' || #{keyword} || '%' 
+				AND content_ttl LIKE CONCAT( '%', #{keyWord}, '%' )
 			</if>
 			
 			<if test="searchType == 'c'.toString()">
-				AND content_cont LIKE '%' || #{keyword} || '%'
+				AND content_cont LIKE '%' || #{keyWord} || '%'
 			 </if>
 			
 			<if test="searchType == 'tc'.toString()">
-				AND (content_ttl LIKE '%' || #{keyword} || '%') or (content_cont LIKE '%' || #{keyword} || '%') 
+				AND (content_ttl LIKE '%' || #{keyWord} || '%') or (content_cont LIKE '%' || #{keyWord} || '%') 
 			</if>
 		</if>
 	</sql>

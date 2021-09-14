@@ -17,6 +17,8 @@
 <script type="text/javascript">
 	
 	$(function(){
+		setSearchTypeSelect();
+			
 		var canPrev = '${pageMaker.prev}';
 		if(canPrev !== 'true'){
 			$('#page-prev').addClass('disabled');
@@ -33,21 +35,22 @@
 		//매번 refresh 되므로 다른 페이지 removeClass 할 필요는 없음->Ajax 이용시엔 해야함
 		$('#page'+thisPage).addClass('active');
 		
+		var thisBoardInfoIdx = '${boardInfoIdx}';
 	})
 	
-	function setPerPageNumSelect(){
-		var perPageNum = '${pageMaker.cri.perPageNum}';
-		var thisPage = '${pageMaker.cri.page}';
+// 	function setPerPageNumSelect() {
+// 		var perPageNum = '${pageMaker.cri.perPageNum}';
+// 		var thisPage = '${pageMaker.cri.page}';
 		
-		$perPageSel.val(perPageNum).prop("selected",true);
-		$perPageSel.on('change',function(){
-			window.location.href = "listPage?page="+thisPage+"&perPageNum=";
-		})
-	}
+// 		$perPageSel.val(perPageNum).prop("selected",true);
+// 		$perPageSel.on('change',function(){
+// 			window.location.href = "board/listPage?boardInfoIdx="+thisBoardInfoIdx+"&page="+thisPage+"&perPageNum=";
+// 		})
+// 	}
 	
-	function setSearchTypeSelect(){
+	function setSearchTypeSelect() {
 		var $searchTypeSel = $('#searchTypeSel');
-		var $keyword = $('#keyWord');
+		var $keyWord = $('#keyWord');
 		
 		$searchTypeSel.val('${pageMaker.cri.searchType}').prop("selected",true);
 		//검색 버튼이 눌리면
@@ -65,7 +68,7 @@
 				$('#keyWord').focus();
 				return;
 			}
-			var url = "listPage?page=1"
+			var url = "listPage?boardInfoIdx=${boardInfoIdx}&page=1"
 				+ "&perPageNum=" + "${pageMaker.cri.perPageNum}"
 				+ "&searchType=" + searchTypeVal
 				+ "&keyWord=" + encodeURIComponent(keyWordVal);
@@ -134,7 +137,7 @@
 				
 						<!-- 페이지 번호 (시작 페이지 번호부터 끝 페이지 번호까지) -->
 						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-						    <li id="page${idx}">
+						    <li class="page-item" id="page${idx}">
 					    		<a class="page-link" href="listPage${pageMaker.makeQuery(idx)}&boardInfoIdx=${boardInfoIdx}">
 					      			<span>${idx}<span class="sr-only">(current)</span></span>
 					    		</a>

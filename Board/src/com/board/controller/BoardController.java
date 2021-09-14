@@ -80,7 +80,6 @@ public class BoardController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("boardInfoIdx") int boardInfoIdx,
 					   @RequestParam("contentIdx") int contentIdx,
-//					   @RequestParam("page") int page,
 					   ReplyBean replyBean, Model model) {
 
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
@@ -89,7 +88,6 @@ public class BoardController {
 		ContentBean result = boardService.getContentInfo(contentIdx);
 		model.addAttribute("result", result);
 		model.addAttribute("loginUserBean", loginUserBean);
-//		model.addAttribute("page", page);
 		
 		replyBean.setReplyBoardIdx(boardInfoIdx);
 		replyBean.setReplyContentIdx(contentIdx);
