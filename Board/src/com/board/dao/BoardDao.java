@@ -50,6 +50,8 @@ public interface BoardDao {
 	 */
 	public int getContentCnt(int contentBoardIdx);
 	
+	public void hitByIdx(ContentBean contentBean);
+	
 //	페이징 연습
 	
 	public List<ContentBean> listPage(Criteria cri);

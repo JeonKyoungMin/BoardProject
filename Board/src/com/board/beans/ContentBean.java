@@ -21,6 +21,7 @@ public class ContentBean {
 	private int contentWriterIdx;
 	private int contentBoardIdx;
 	private String contentYmd;
+	private int contentCnt;
 	private String contentWriterName;
 
 	private MultipartFile uploadFile;

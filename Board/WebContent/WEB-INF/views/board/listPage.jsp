@@ -95,6 +95,7 @@
 						<th class="w-50">제목</th>
 						<th class="text-center d-none d-md-table-cell">작성자</th>
 						<th class="text-center d-none d-md-table-cell">작성날짜</th>
+						<th class="text-center d-none d-md-table-cell">조회수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -104,6 +105,7 @@
 							<td><a href='${root }board/readPage?${pageMaker.makeQuery(pageMaker.cri.page)}&boardInfoIdx=${boardInfoIdx}&contentIdx=${obj.contentIdx}'>${obj.contentTtl }</a></td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentWriterName }</td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentYmd }</td>
+							<td class="text-center d-none d-md-table-cell">${obj.contentCnt }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -115,8 +117,10 @@
 						<option value="">검색조건</option>
 						<option value="t">제목</option> 
 						<option value="c">내용</option>
+						<option value="w">작성자</option>
 						<option value="tc">제목+내용</option>
 						<option value="all">전체조건</option>
+						
 					</select>
 					
 					<input class="form-control" type="text" id="keyWord" name="keyWord" 

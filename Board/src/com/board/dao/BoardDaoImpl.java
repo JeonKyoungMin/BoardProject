@@ -62,6 +62,11 @@ public class BoardDaoImpl implements BoardDao {
 		return result;
 	}
 	
+	@Override
+	public void hitByIdx(ContentBean contentBean) {
+		sqlSessionTemplate.update("board.hitByIdx", contentBean);
+	}
+	
 //	페이징 연습
 	
 	@Override

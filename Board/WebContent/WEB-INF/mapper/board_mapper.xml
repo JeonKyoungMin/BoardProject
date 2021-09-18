@@ -12,6 +12,7 @@
 		<result property="contentBoardIdx" column="content_board_idx"/>
 		<result property="contentYmd" column="content_ymd"/>
 		<result property="contentWriterName" column="content_writer_name"/>
+		<result property="contentCnt" column="content_cnt"/>
 	</resultMap>
 	
 	<sql id="Cols">
@@ -20,6 +21,7 @@
 		content_file,
 		content_writer_idx,
 		content_board_idx,
+		content_cnt,
 		content_ymd
 	</sql>
 	
@@ -35,11 +37,15 @@
 			</if>
 			
 			<if test="searchType == 'c'.toString()">
-				AND content_cont LIKE '%' || #{keyWord} || '%'
+				AND content_cont LIKE CONCAT( '%', #{keyWord}, '%' )
+			 </if>
+			
+			<if test="searchType == 'W'.toString()">
+				AND a2.content_writer_name LIKE CONCAT( '%', #{keyWord}, '%' )
 			 </if>
 			
 			<if test="searchType == 'tc'.toString()">
-				AND (content_ttl LIKE '%' || #{keyWord} || '%') or (content_cont LIKE '%' || #{keyWord} || '%') 
+				AND (content_ttl LIKE CONCAT( '%', #{keyWord}, '%' )) or (content_cont LIKE CONCAT( '%', #{keyWord}, '%' )) 
 			</if>
 		</if>
 	</sql>
@@ -64,7 +70,7 @@
 	<select id="getContentList" parameterType="java.lang.Integer" resultMap="ContentResult">
 		SELECT
 			a1.content_idx, a1.content_ttl, a2.user_name as content_writer_name,
-			date_format(a1.content_ymd,"%y-%m-%d") as content_ymd
+			date_format(a1.content_ymd,"%y-%m-%d") as content_ymd, a1.content_cnt
 		FROM
 			content_table a1, user_table a2
 		WHERE
@@ -77,7 +83,7 @@
 	<select id="getContentInfo" parameterType="java.lang.Integer" resultMap="ContentResult">
 		SELECT
 			a2.user_name as content_writer_name, date_format(a1.content_ymd,"%y-%m-%d") as content_ymd,
-			a1.content_ttl, a1.content_cont, a1.content_file, a1.content_writer_idx
+			a1.content_ttl, a1.content_cont, a1.content_file, a1.content_writer_idx, a1.content_cnt
 		FROM
 			content_table a1, user_table a2
 		WHERE
@@ -113,14 +119,28 @@
 			content_board_idx = #{contentBoardIdx}
 	</select>
 	
+	<update id="hitByIdx" parameterType="com.board.beans.ContentBean">
+		UPDATE
+			content_table
+		SET
+			content_cnt = #{contentCnt} + 1
+		WHERE
+			content_board_idx = #{contentBoardIdx}
+		AND	
+			content_idx = #{contentIdx}
+	</update>
+	
  	<!-- paging 연습 -->
 	
 	<select id="listPage" parameterType="com.board.beans.Criteria" resultMap="ContentResult">
 		SELECT
-			<include refid="listCols"/>
+			a1.content_idx, a1.content_ttl, a2.user_name as content_writer_name,
+			date_format(a1.content_ymd,"%y-%m-%d") as content_ymd, a1.content_cnt
 		FROM
-			content_table
+			content_table a1, user_table a2
 		WHERE
+			a1.content_writer_idx = a2.user_idx
+		AND
 			content_board_idx = #{boardInfoIdx}
 			<include refid="searchCondition"/>
 		ORDER BY

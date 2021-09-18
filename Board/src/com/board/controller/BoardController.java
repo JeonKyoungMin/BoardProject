@@ -13,10 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.beans.ContentBean;
 import com.board.beans.Criteria;
-import com.board.beans.PageBean;
 import com.board.beans.PageMaker;
 import com.board.beans.ReplyBean;
 import com.board.beans.UserBean;
@@ -37,28 +37,28 @@ public class BoardController {
 	@Lazy
 	private UserBean loginUserBean;
 	
-	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(@RequestParam("boardInfoIdx") int boardInfoIdx,
-					   @RequestParam(value = "page", defaultValue = "1") int page,
-					   ContentBean contentBean, Model model) {
-		model.addAttribute("boardInfoIdx", boardInfoIdx);
-
-		String result = boardService.getBoardInfo(boardInfoIdx);
-		model.addAttribute("boardInfoName", result);
-
-		List<ContentBean> contentList= boardService.getContentList(boardInfoIdx, page);
-		model.addAttribute("contentList", contentList);
-		
-		PageBean pageBean = boardService.getContentCnt(boardInfoIdx, page);
-		model.addAttribute("pageBean", pageBean);
-		model.addAttribute("page", page);
-		
-		return "board/main";
-	}
+//	@RequestMapping(value = "/main", method = RequestMethod.GET)
+//	public String main(@RequestParam("boardInfoIdx") int boardInfoIdx,
+//					   @RequestParam(value = "page", defaultValue = "1") int page,
+//					   ContentBean contentBean, Model model) {
+//		model.addAttribute("boardInfoIdx", boardInfoIdx);
+//
+//		String result = boardService.getBoardInfo(boardInfoIdx);
+//		model.addAttribute("boardInfoName", result);
+//
+//		List<ContentBean> contentList= boardService.getContentList(boardInfoIdx, page);
+//		model.addAttribute("contentList", contentList);
+//		
+//		PageBean pageBean = boardService.getContentCnt(boardInfoIdx, page);
+//		model.addAttribute("pageBean", pageBean);
+//		model.addAttribute("page", page);
+//		
+//		return "board/main";
+//	}
 	
 	@RequestMapping(value= "/listPage", method= RequestMethod.GET)
 	public String list(@RequestParam("boardInfoIdx") int boardInfoIdx,
-					   @RequestParam(value = "page", defaultValue = "1") int page,
+//					   @RequestParam(value = "page", defaultValue = "1") int page,
 					ContentBean contentBean, Criteria cri, Model model) {
 		
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
@@ -77,37 +77,44 @@ public class BoardController {
 		return "board/listPage";
 	}
 	
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public String read(@RequestParam("boardInfoIdx") int boardInfoIdx,
-					   @RequestParam("contentIdx") int contentIdx,
-					   ReplyBean replyBean, Model model) {
-
-		model.addAttribute("boardInfoIdx", boardInfoIdx);
-		model.addAttribute("contentIdx", contentIdx);
-
-		ContentBean result = boardService.getContentInfo(contentIdx);
-		model.addAttribute("result", result);
-		model.addAttribute("loginUserBean", loginUserBean);
-		
-		replyBean.setReplyBoardIdx(boardInfoIdx);
-		replyBean.setReplyContentIdx(contentIdx);
-		
-		List<ReplyBean> replyList = replyService.selectReply(replyBean);
-		
-		model.addAttribute("replyList", replyList);
-		
-		return "board/read";
-	}
+//	@RequestMapping(value = "/read", method = RequestMethod.GET)
+//	public String read(@RequestParam("boardInfoIdx") int boardInfoIdx,
+//					   @RequestParam("contentIdx") int contentIdx,
+//					   ReplyBean replyBean, Model model) {
+//
+//		model.addAttribute("boardInfoIdx", boardInfoIdx);
+//		model.addAttribute("contentIdx", contentIdx);
+//
+//		ContentBean result = boardService.getContentInfo(contentIdx);
+//		model.addAttribute("result", result);
+//		model.addAttribute("loginUserBean", loginUserBean);
+//		
+//		replyBean.setReplyBoardIdx(boardInfoIdx);
+//		replyBean.setReplyContentIdx(contentIdx);
+//		
+//		List<ReplyBean> replyList = replyService.selectReply(replyBean);
+//		
+//		model.addAttribute("replyList", replyList);
+//		
+//		return "board/read";
+//	}
 	
 	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
 	public String readPage(@RequestParam("boardInfoIdx") int boardInfoIdx,
-			@RequestParam("contentIdx") int contentIdx,
-			ReplyBean replyBean, Model model) {
+			@RequestParam("contentIdx") int contentIdx, Criteria cri,
+			ReplyBean replyBean, ContentBean contentBean, Model model) {
 		
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		model.addAttribute("contentIdx", contentIdx);
 		
 		ContentBean result = boardService.getContentInfo(contentIdx);
+		
+		contentBean.setContentBoardIdx(boardInfoIdx);
+		contentBean.setContentIdx(contentIdx);
+		contentBean.setContentCnt(result.getContentCnt());
+		
+		boardService.hitByIdx(contentBean);
+		
 		model.addAttribute("result", result);
 		model.addAttribute("loginUserBean", loginUserBean);
 		
@@ -115,8 +122,8 @@ public class BoardController {
 		replyBean.setReplyContentIdx(contentIdx);
 		
 		List<ReplyBean> replyList = replyService.selectReply(replyBean);
-		
 		model.addAttribute("replyList", replyList);
+		model.addAttribute("cri", cri);
 		
 		return "board/readPage";
 	}

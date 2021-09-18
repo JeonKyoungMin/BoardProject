@@ -123,6 +123,11 @@ public class BoardServiceImpl implements BoardService {
 		return pageBean;
 	}
 	
+	@Override
+	public void hitByIdx(ContentBean contentBean) {
+		boardDao.hitByIdx(contentBean);
+	}
+	
 //	paging 연습
 	
 	@Override

@@ -60,6 +60,10 @@
 						<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="${result.contentWriterName }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
+						<label for="board_content">조회수</label>
+						<input type="text" id="board_date" name="board_date" class="form-control" value="${result.contentCnt }" disabled="disabled"/>
+					</div>
+					<div class="form-group">
 						<label for="board_date">작성날짜</label>
 						<input type="text" id="board_date" name="board_date" class="form-control" value="${result.contentYmd }" disabled="disabled"/>
 					</div>
@@ -94,7 +98,6 @@
 								<form:hidden path="replyBoardIdx"/>
 								<form:hidden path="replyContentIdx"/>
 								
-								<h6>댓글 작성</h6>	
 								<div class='row'>
 									<div class='col-sm-5'>
 										<form:input path="replyWriter" class='form-control' placeholder='작성자'/> 

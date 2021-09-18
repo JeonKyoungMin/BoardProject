@@ -51,6 +51,8 @@ public interface BoardService {
 	 */
 	public PageBean getContentCnt(int contentBoardIdx, int currentPage);
 	
+	public void hitByIdx(ContentBean contentBean);
+	
 //	페이징 연습
 	
 	public List<ContentBean> listPage(Criteria cri);

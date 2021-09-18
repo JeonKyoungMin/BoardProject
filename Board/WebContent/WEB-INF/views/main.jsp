@@ -38,14 +38,14 @@
 							<c:forEach var="obj" items="${sub_list }">
 								<tr>
 									<td class="text-center">${obj.contentIdx }</td>
-									<th><a href='${root }board/read?boardInfoIdx=${boardList[idx.index].boardInfoIdx}&contentIdx=${obj.contentIdx}&page=1'>${obj.contentTtl }</a></th>
+									<th><a href='${root }board/readPage?boardInfoIdx=${boardList[idx.index].boardInfoIdx}&contentIdx=${obj.contentIdx}&page=1'>${obj.contentTtl }</a></th>
 									<td class="text-center d-none d-xl-table-cell">${obj.contentYmd }</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					
-					<a href="${root }board/main?boardInfoIdx=${boardList[idx.index].boardInfoIdx}" class="btn btn-primary">더보기</a>
+					<a href="${root }board/listPage?boardInfoIdx=${boardList[idx.index].boardInfoIdx}" class="btn btn-primary">더보기</a>
 				</div>
 			</div>
 		</div>
