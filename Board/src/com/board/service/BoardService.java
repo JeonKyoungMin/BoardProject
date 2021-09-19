@@ -53,6 +53,8 @@ public interface BoardService {
 	
 	public void hitByIdx(ContentBean contentBean);
 	
+	public Criteria selectPrevNextNum(Criteria cri);
+	
 //	페이징 연습
 	
 	public List<ContentBean> listPage(Criteria cri);

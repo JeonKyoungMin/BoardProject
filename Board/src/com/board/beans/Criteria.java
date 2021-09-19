@@ -8,17 +8,33 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Criteria {
+	
 	private int page;
+	
 	private int perPageNum;
+	
 	private String searchType;
+	
 	private String keyWord;
+	
 	private int boardInfoIdx;
+	
+	private int contentIdx;
+	
+    private int prevIdx;
+
+    private int nextIdx;
+    
+    private String prevTtl;
+    
+    private String nextTtl;
 	
 	public Criteria() {
 		this.page = 1;
 		this.perPageNum = 10;
 		this.searchType = null;
 		this.keyWord = null;
+		this.boardInfoIdx = boardInfoIdx;
 	}
     
 	//pageStart를 반환
@@ -59,11 +75,12 @@ public class Criteria {
 		}
 		return uriComponentsBuilder.build().encode().toString();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", searchType=" + searchType + ", keyWord="
-				+ keyWord + "]";
+				+ keyWord + ", boardInfoIdx=" + boardInfoIdx + ", contentIdx=" + contentIdx + ", prevIdx=" + prevIdx
+				+ ", nextIdx=" + nextIdx + ", prevTtl=" + prevTtl + ", nextTtl=" + nextTtl + "]";
 	}
 	
 }

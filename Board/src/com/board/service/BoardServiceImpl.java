@@ -128,6 +128,13 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.hitByIdx(contentBean);
 	}
 	
+	@Override
+	public Criteria selectPrevNextNum(Criteria cri) {
+		Criteria result = boardDao.selectPrevNextNum(cri);
+		
+		return result;
+	}
+	
 //	paging 연습
 	
 	@Override

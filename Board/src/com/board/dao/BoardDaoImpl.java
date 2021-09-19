@@ -67,6 +67,13 @@ public class BoardDaoImpl implements BoardDao {
 		sqlSessionTemplate.update("board.hitByIdx", contentBean);
 	}
 	
+	@Override
+	public Criteria selectPrevNextNum(Criteria cri) {
+		Criteria result = sqlSessionTemplate.selectOne("board.selectPrevNextNum", cri);
+		
+		return result;
+	}
+	
 //	페이징 연습
 	
 	@Override

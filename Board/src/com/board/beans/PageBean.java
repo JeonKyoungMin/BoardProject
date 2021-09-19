@@ -6,10 +6,15 @@ import lombok.Getter;
 public class PageBean {
 
 	private int min;
+	
 	private int max;
+	
 	private int prevPage;
+	
 	private int nextPage;
+	
 	private int pageCnt;
+	
 	private int currentPage;
 	
 	// contentCnt : 전체 글 개수, currentPage : 현재 글 번호, contentPageCnt : 페이지당 글 개수, paginationCnt : 페이지버튼 개수

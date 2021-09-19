@@ -10,7 +10,9 @@ import lombok.Data;
 public class ReplyBean {
 
 	public int replyBoardIdx;
+	
 	public int replyContentIdx;
+	
 	public int replyIdx;
 	
 	@NotBlank
@@ -20,5 +22,6 @@ public class ReplyBean {
 	public String replyWriter;
 	
 	public Date replyYmd;
+	
 	public String replyPass;
 }

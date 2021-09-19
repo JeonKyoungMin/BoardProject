@@ -6,6 +6,7 @@ import lombok.Data;
 public class BoardInfoBean {
 
 	private int boardInfoIdx;
+	
 	private String boardInfoName;
 	
 }

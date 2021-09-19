@@ -8,11 +8,17 @@ import lombok.Data;
 public class PageMaker {
 
 	private int displayPageCnt = 10;
+	
 	private int totalDataCount;
+	
 	private int startPage;
+	
 	private int endPage;
+	
 	private boolean prev;
+	
 	private boolean next;
+	
 	private Criteria cri;
 	
 	public PageMaker(Criteria cri) {

@@ -112,11 +112,16 @@ public class BoardController {
 		contentBean.setContentBoardIdx(boardInfoIdx);
 		contentBean.setContentIdx(contentIdx);
 		contentBean.setContentCnt(result.getContentCnt());
+		cri.setBoardInfoIdx(boardInfoIdx);
+		cri.setContentIdx(contentIdx);
 		
 		boardService.hitByIdx(contentBean);
 		
 		model.addAttribute("result", result);
 		model.addAttribute("loginUserBean", loginUserBean);
+		
+		Criteria num = boardService.selectPrevNextNum(cri);
+		System.out.println(num);
 		
 		replyBean.setReplyBoardIdx(boardInfoIdx);
 		replyBean.setReplyContentIdx(contentIdx);

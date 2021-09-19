@@ -18,10 +18,15 @@ public class ContentBean {
 	private String contentCont;
 	
 	private String contentFile;
+	
 	private int contentWriterIdx;
+	
 	private int contentBoardIdx;
+	
 	private String contentYmd;
+	
 	private int contentCnt;
+	
 	private String contentWriterName;
 
 	private MultipartFile uploadFile;

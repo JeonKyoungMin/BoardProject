@@ -15,18 +15,25 @@
 		<result property="contentCnt" column="content_cnt"/>
 	</resultMap>
 	
+	<resultMap id="CriteriaResult" type="com.board.beans.Criteria">
+		<result property="prevTtl" column="content_prev_ttl"/>
+		<result property="prevIdx" column="content_prev_idx"/>
+		<result property="nextTtl" column="content_next_ttl"/>
+		<result property="nextIdx" column="content_next_idx"/>
+	</resultMap>
+		
 	<sql id="Cols">
 		content_ttl,
 		content_cont,
 		content_file,
 		content_writer_idx,
 		content_board_idx,
-		content_cnt,
 		content_ymd
 	</sql>
 	
 	<sql id="listCols">
 		content_idx,
+		content_cnt,
 		<include refid="Cols"/>
 	</sql>
 	
@@ -157,6 +164,28 @@
 		WHERE
 			content_board_idx = #{boardInfoIdx}
 			<include refid="searchCondition"/>
+	</select>
+	
+	<select id="selectPrevNextNum" resultMap="CriteriaResult">
+		SELECT 
+			content_next_idx, content_next_ttl, content_prev_idx, content_prev_ttl
+		FROM
+			( SELECT
+				content_idx, content_board_idx,
+		        LAG(content_idx, 1, 0) OVER (order by content_idx desc) as content_next_idx,
+		        LAG(content_ttl, 1, 0) OVER (order by content_idx desc) as content_next_ttl,
+				LEAD(content_idx, 1, 0) OVER (order by content_idx desc) as content_prev_idx,
+		        LEAD(content_ttl, 1, 0) OVER (order by content_idx desc) as content_prev_ttl
+			FROM
+				content_table
+			WHERE
+				content_board_idx = #{boardInfoIdx}
+				<include refid="searchCondition"/>
+			) content_table
+		WHERE
+			content_idx > 0
+		AND 
+			content_idx = #{contentIdx}
 	</select>
 	
 </mapper>
