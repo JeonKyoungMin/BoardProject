@@ -34,7 +34,6 @@ public class Criteria {
 		this.perPageNum = 10;
 		this.searchType = null;
 		this.keyWord = null;
-		this.boardInfoIdx = boardInfoIdx;
 	}
     
 	//pageStart를 반환
@@ -46,9 +45,9 @@ public class Criteria {
 		return page;
 	}
 	public void setPage(int page) {
-		if(page <= 0) {
+		if (page <= 0) {
 			this.page = 1;
-		}else {
+		} else {
 			this.page = page;
 		}
 	}
@@ -56,9 +55,9 @@ public class Criteria {
 		return perPageNum;
 	}
 	public void setPerPageNum(int perPageNum) {
-		if(perPageNum <=0 || perPageNum > 100) {
+		if (perPageNum <=0 || perPageNum > 100) {
 			this.perPageNum = 10;
-		}else {
+		} else {
 			this.perPageNum = perPageNum;
 		}
 	}

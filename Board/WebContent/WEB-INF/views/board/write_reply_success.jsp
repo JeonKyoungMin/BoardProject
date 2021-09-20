@@ -5,5 +5,5 @@
 
 <script>
 	alert("작성되었습니다.")
-	location.href="${root}main"
+	location.href="${root}readPage?boardInfoIdx=${replyBoardIdx}&contentIdx=${replyContentIdx}"
 </script>

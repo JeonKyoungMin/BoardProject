@@ -58,20 +58,19 @@ public class BoardController {
 	
 	@RequestMapping(value= "/listPage", method= RequestMethod.GET)
 	public String list(@RequestParam("boardInfoIdx") int boardInfoIdx,
-//					   @RequestParam(value = "page", defaultValue = "1") int page,
 					ContentBean contentBean, Criteria cri, Model model) {
 		
 		model.addAttribute("boardInfoIdx", boardInfoIdx);
 		
 		String result = boardService.getBoardInfo(boardInfoIdx);
 		model.addAttribute("boardInfoName", result);
-
-		PageMaker pageMaker = new PageMaker(cri);
-		int totalCount = boardService.totalCount(cri);
-		pageMaker.setTotalCount(totalCount);
 		
 		List<ContentBean> contentList = boardService.listPage(cri);
 		model.addAttribute("contentList", contentList);
+		
+		PageMaker pageMaker = new PageMaker(cri);
+		int totalCount = boardService.totalCount(cri);
+		pageMaker.setTotalCount(totalCount);
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "board/listPage";
@@ -120,15 +119,20 @@ public class BoardController {
 		model.addAttribute("result", result);
 		model.addAttribute("loginUserBean", loginUserBean);
 		
-		Criteria num = boardService.selectPrevNextNum(cri);
-		System.out.println(num);
-		
+		Criteria pnResult = boardService.selectPrevNextNum(cri);
+
 		replyBean.setReplyBoardIdx(boardInfoIdx);
 		replyBean.setReplyContentIdx(contentIdx);
+		
+		PageMaker pageMaker = new PageMaker(cri);
+		int totalCount = boardService.totalCount(cri);
+		pageMaker.setTotalCount(totalCount);
 		
 		List<ReplyBean> replyList = replyService.selectReply(replyBean);
 		model.addAttribute("replyList", replyList);
 		model.addAttribute("cri", cri);
+		model.addAttribute("pnResult", pnResult);
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "board/readPage";
 	}
@@ -155,13 +159,13 @@ public class BoardController {
 		}
 	}
 	
-	@RequestMapping(value = "/write_reply", method = RequestMethod.POST)
-	public String write_reply(ReplyBean replyBean) {
-		
-		replyService.writeReply(replyBean);
-		
-		return "board/write_reply_success";
-	}
+//	@RequestMapping(value = "/write_reply", method = RequestMethod.POST)
+//	public String write_reply(ReplyBean replyBean) {
+//		
+//		replyService.writeReply(replyBean);
+//		
+//		return "board/write_reply_success";
+//	}
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,

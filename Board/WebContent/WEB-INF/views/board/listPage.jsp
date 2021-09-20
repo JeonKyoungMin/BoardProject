@@ -18,6 +18,8 @@
 	
 	$(function(){
 		setSearchTypeSelect();
+		var perPageNum = '${pageMaker.cri.perPageNum}';
+		var thisPage = '${pageMaker.cri.page}';
 			
 		var canPrev = '${pageMaker.prev}';
 		if(canPrev !== 'true'){
@@ -38,15 +40,6 @@
 		var thisBoardInfoIdx = '${boardInfoIdx}';
 	})
 	
-// 	function setPerPageNumSelect() {
-// 		var perPageNum = '${pageMaker.cri.perPageNum}';
-// 		var thisPage = '${pageMaker.cri.page}';
-		
-// 		$perPageSel.val(perPageNum).prop("selected",true);
-// 		$perPageSel.on('change',function(){
-// 			window.location.href = "board/listPage?boardInfoIdx="+thisBoardInfoIdx+"&page="+thisPage+"&perPageNum=";
-// 		})
-// 	}
 	
 	function setSearchTypeSelect() {
 		var $searchTypeSel = $('#searchTypeSel');
@@ -102,7 +95,7 @@
 					<c:forEach var="obj" items="${contentList }">
 						<tr>
 							<td class="text-center d-none d-md-table-cell">${obj.contentIdx }</td>
-							<td><a href='${root }board/readPage?${pageMaker.makeQuery(pageMaker.cri.page)}&boardInfoIdx=${boardInfoIdx}&contentIdx=${obj.contentIdx}'>${obj.contentTtl }</a></td>
+							<td><a href='${root }board/readPage${pageMaker.makeQuery(pageMaker.cri.page)}&boardInfoIdx=${boardInfoIdx}&contentIdx=${obj.contentIdx}'>${obj.contentTtl }</a></td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentWriterName }</td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentYmd }</td>
 							<td class="text-center d-none d-md-table-cell">${obj.contentCnt }</td>

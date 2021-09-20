@@ -17,7 +17,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".list_btn").on("click", function() {
-			location.href="${root }board/readPage?${cri.makeQuery()}&boardInfoIdx=${boardInfoIdx}&contentIdx=${contentIdx}&page=${page}";
+			location.href="${root }board/readPage${cri.makeQuery()}&boardInfoIdx=${boardInfoIdx}&contentIdx=${contentIdx}&page=${page}";
 		});
 	})
 	

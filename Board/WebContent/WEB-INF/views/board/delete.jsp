@@ -5,5 +5,5 @@
 
 <script>
 	alert("삭제되었습니다.");
-	location.href="${root}board/main?boardInfoIdx=${boardInfoIdx}"  
+	location.href="${root}board/listPage?boardInfoIdx=${boardInfoIdx}"  
 </script>

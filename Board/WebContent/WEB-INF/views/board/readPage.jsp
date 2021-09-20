@@ -20,11 +20,11 @@
 	$(document).ready(function() {
 
 		$(".list_btn").on("click", function() {
-			location.href = "/board/listPage?${cri.makeQuery()}&boardInfoIdx=${boardInfoIdx}";
+			location.href = "/board/listPage${cri.makeQuery()}&boardInfoIdx=${boardInfoIdx}";
 		});
 		
 		$(".update_btn").on("click", function() {
-			location.href = "/board/modify?${cri.makeQuery()}&contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}"
+			location.href = "/board/modify${cri.makeQuery()}&contentIdx=${contentIdx}&boardInfoIdx=${boardInfoIdx}"
 		});
 		
 		$(".delete_btn").on("click", function() {
@@ -135,10 +135,48 @@
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
+						</div>
+						
+						<div class = "form-control">
+							<c:choose>
+								<c:when test="${pnResult.nextIdx == 0 }">
+									<div class="text-left">
+										<label>다음글 : </label> <br>
+										<h6 style="color : red;">다음글이 없습니다.</h6>
+									</div>
+								</c:when>
+								
+								<c:otherwise>	
+									<div class="text-left">
+										<label>다음글 : </label>
+										<a href="${root }board/readPage?${pageMaker.makeQuery(pageMaker.cri.page)}&boardInfoIdx=${boardInfoIdx}&contentIdx=${pnResult.nextIdx}">
+										${pnResult.nextTtl }	
+										</a>
+									</div>
+								</c:otherwise>
+							</c:choose>
+							
+							<c:choose>
+								<c:when test="${pnResult.prevIdx == 0 }">
+									<div class="text-right">
+										<label>이전글 : </label> <br>
+										<h6 style="color : red;">이전글이 없습니다.</h6>
+									</div>
+								</c:when>
+								
+								<c:otherwise>	
+									<div class="text-right">
+										<label>이전글 : </label> 
+										<a href="${root }board/readPage?${pageMaker.makeQuery(pageMaker.cri.page)}&boardInfoIdx=${boardInfoIdx}&contentIdx=${pnResult.prevIdx}">
+											${pnResult.prevTtl }	
+										</a>
+									</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 		<div class="col-sm-3"></div>
 	</div>
 </div>
