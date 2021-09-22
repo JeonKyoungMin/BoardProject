@@ -5,5 +5,5 @@
 
 <script>
 	alert("작성되었습니다.")
-	location.href="${root}readPage?boardInfoIdx=${replyBoardIdx}&contentIdx=${replyContentIdx}"
+	location.href="${root}board/readPage?${cri.makeQuery()}&boardInfoIdx=${replyBean.replyBoardIdx}&contentIdx=${replyBean.replyContentIdx}"
 </script>
