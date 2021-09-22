@@ -159,13 +159,13 @@ public class BoardController {
 		}
 	}
 	
-//	@RequestMapping(value = "/write_reply", method = RequestMethod.POST)
-//	public String write_reply(ReplyBean replyBean) {
-//		
-//		replyService.writeReply(replyBean);
-//		
-//		return "board/write_reply_success";
-//	}
+	@RequestMapping(value = "/write_reply", method = RequestMethod.POST)
+	public String write_reply(ReplyBean replyBean) {
+		
+		replyService.writeReply(replyBean);
+		
+		return "board/write_reply_success";
+	}
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(@RequestParam("boardInfoIdx") int boardInfoIdx,

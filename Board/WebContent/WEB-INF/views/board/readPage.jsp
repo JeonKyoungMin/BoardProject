@@ -93,11 +93,35 @@
 								</c:if>
 						</div>
 					</div>
-					<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top : 10px">
+
+					<div class="form-group">
+						<label for="board_reply" class='label label-info'>댓글</label>
+						<c:choose>
+							<c:when test="${empty replyList }">
+								<div class='my-3 p-3 bg-white rounded shadow-sm' >	
+									<p style="color : red;">댓글이 없습니다. 댓글을 작성해주세요</p>
+								</div>
+							</c:when>
+							
+							<c:otherwise>
+								<c:forEach items="${replyList }" var="replyList">
+									<div class='my-3 p-3 bg-white rounded shadow-sm' >	
+										<p>
+											 작성자 : ${replyList.replyWriter } &nbsp;
+									   		(<fmt:formatDate value="${replyList.replyYmd }" pattern="yyyy-MM-dd" />)
+										</p>
+										<p>댓글 : ${replyList.replyContent }  </p>
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+						
+						<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top : 10px">
 							<form:form action='${root}board/write_reply' modelAttribute="replyBean" name="writeReply" method='post'>
 								<form:hidden path="replyBoardIdx"/>
 								<form:hidden path="replyContentIdx"/>
 								
+								<h6>댓글 작성</h6>	
 								<div class='row'>
 									<div class='col-sm-5'>
 										<form:input path="replyWriter" class='form-control' placeholder='작성자'/> 
@@ -108,34 +132,12 @@
 									<br><br>
 									<div class='col-sm-10'>
 										<form:textarea path="replyContent" class='form-control' rows='3'  placeholder='댓글을 입력해주세요'/>
-									</div>
-										<button class='write_btn btn-sm btn-primary' onclick="writeReply()">작성</button>
-								</div>							
+									</div>							
+								<button class='write_btn btn-sm btn-primary' onclick="writeReplyPro()">작성</button>
+								</div>
 							</form:form>
 						</div>	
-						
-						<div class="form-group">
-							<label for="board_reply" class='label label-info'>댓글</label>
-							<c:choose>
-								<c:when test="${empty replyList }">
-									<div class='my-3 p-3 bg-white rounded shadow-sm' >	
-										<p style="color : red;">댓글이 없습니다. 댓글을 작성해주세요</p>
-									</div>
-								</c:when>
-								
-								<c:otherwise>
-									<c:forEach items="${replyList }" var="replyList">
-										<div class='my-3 p-3 bg-white rounded shadow-sm' >	
-											<p>
-												 작성자 : ${replyList.replyWriter } &nbsp;
-										   		(<fmt:formatDate value="${replyList.replyYmd }" pattern="yyyy-MM-dd" />)
-											</p>
-											<p>댓글 : ${replyList.replyContent }  </p>
-										</div>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						</div>
+					</div>
 						
 						<div class = "form-control">
 							<c:choose>

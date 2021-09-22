@@ -104,7 +104,7 @@
 						</div>
 					</div>
 					<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top : 10px">
-							<form:form action='${root}board/write_reply' modelAttribute="replyBean" name="writeReply" method='post'>
+							<form:form action='${root}reply/write' modelAttribute="replyBean" name="writeReply" method='post'>
 								<form:hidden path="replyBoardIdx"/>
 								<form:hidden path="replyContentIdx"/>
 								

@@ -4,7 +4,7 @@
 <mapper namespace="topMenu">
 
 	<resultMap id="BoardInfoResult" type="com.board.beans.BoardInfoBean">
-		<result property="boardInfoIdx" column="board_info_idx"/>
+		<id property="boardInfoIdx" column="board_info_idx"/>
 		<result property="boardInfoName" column="board_info_name"/>
 	</resultMap>
 	
