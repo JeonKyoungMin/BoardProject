@@ -36,6 +36,10 @@ public class BoardServiceImpl implements BoardService {
 	@Lazy
 	private UserBean loginUserBean;
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 파일 첨부
+	 */
 	private String saveUploadFile(MultipartFile uploadFile) {
 		
 		String fileName = System.currentTimeMillis() + "_" + uploadFile.getOriginalFilename();
@@ -53,6 +57,10 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardDao boardDao;
 
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 작성
+	 */
 	@Override
 	public void insertContent(ContentBean contentBean) {
 		
@@ -70,6 +78,10 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.insertContent(contentBean);
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 정보 가져오기
+	 */
 	@Override
 	public String getBoardInfo(int boardInfoIdx) {
 		String result = boardDao.getBoardInfo(boardInfoIdx);
@@ -77,6 +89,10 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 리스트 가져오기 
+	 */
 	@Override
 	public List<ContentBean> getContentList(int boardInfoIdx, int page) {
 		int start = (page - 1) * pageListcnt;
@@ -87,6 +103,10 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 정보 가져오기
+	 */
 	@Override
 	public ContentBean getContentInfo(int contentIdx) {
 		ContentBean result = boardDao.getContentInfo(contentIdx);
@@ -94,6 +114,10 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 수정
+	 */
 	@Override
 	public void modifyContent(ContentBean contentBean) {
 		
@@ -107,12 +131,20 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.modifyContent(contentBean);
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 삭제
+	 */
 	@Override
 	public void deleteContent(int contentIdx) {
 		
 		boardDao.deleteContent(contentIdx);
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 삭제 
+	 */
 	@Override
 	public PageBean getContentCnt(int contentBoardIdx, int currentPage) {
 	
@@ -123,11 +155,19 @@ public class BoardServiceImpl implements BoardService {
 		return pageBean;
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 
+	 */
 	@Override
 	public void hitByIdx(ContentBean contentBean) {
 		boardDao.hitByIdx(contentBean);
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 
+	 */
 	@Override
 	public Criteria selectPrevNextNum(Criteria cri) {
 		Criteria result = boardDao.selectPrevNextNum(cri);
@@ -135,8 +175,10 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 	
-//	paging 연습
-	
+	/**
+	 * <pre>
+	 * 처리내용 : 페이징을 포함한 게시글 리스트 가져오기
+	 */
 	@Override
 	public List<ContentBean> listPage(Criteria cri) {
 		
@@ -145,6 +187,10 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 전체 갯수 가져오기
+	 */
 	@Override
 	public int totalCount(Criteria cri) {
 		int result = boardDao.totalCount(cri);

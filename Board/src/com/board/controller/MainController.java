@@ -13,7 +13,10 @@ import com.board.beans.ContentBean;
 import com.board.service.MainService;
 import com.board.service.TopMenuService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class MainController {
 	
 	@Autowired
@@ -24,6 +27,8 @@ public class MainController {
 	
 	@GetMapping("/main")
 	public String main(Model model) {
+		
+		log.info("main");
 		
 		ArrayList<List<ContentBean>> list = new ArrayList<List<ContentBean>>();
 

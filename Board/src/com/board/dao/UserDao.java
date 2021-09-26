@@ -12,47 +12,56 @@ import com.board.beans.UserBean;
 public interface UserDao {
 
 	/**
-	 * <p>아이디 중복확인</p>
+	 * <pre>
+	 * 처리내용 : 아이디 중복확인
 	 */
 	public String checkUserIdExist(String userId);
 	
 	/**
-	 * <p>유저 회원가입</p>
+	 * <pre>
+	 * 처리내용 : 유저 회원가입
 	 */
 	public void addUser(UserBean joinUserBean);
 	
 	/**
-	 * <p>로그인 유저 정보 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 로그인 유저의 정보 가져오기
 	 */
 	public UserBean getLoginUserInfo(UserBean tempLoginUserBean);
 	
 	/**
-	 * <p>유저 정보 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 유저 정보 가져오기
 	 */
 	public UserBean getUserInfo(UserBean userBean);
 	
 	/**
-	 * <p>유저 탈퇴</p>
+	 * <pre>
+	 * 처리내용 : 유저 정보 삭제 (탈퇴)
 	 */
 	public void deleteUser(UserBean userBean);
 
 	/**
-	 * <p>유저 아이디 찾기</p>
+	 * <pre>
+	 * 처리내용 : 유저 아이디 정보 찾기
 	 */
 	public String findUserId(UserBean userBean);
 	
 	/**
-	 * <p>유저 비밀번호 변경을 위해 유저 정보 찾기</p>
+	 * <pre>
+	 * 처리내용 : 유저 비밀번호 찾기 위한 유저 정보 가져오기
 	 */
 	public UserBean findUserPw(UserBean userBean);
 	
 	/**
-	 * <p>유저 비밀번호 변경</p>
+	 * <pre>
+	 * 처리내용 : 유저 비밀번호 변경
 	 */
 	public void modifyUserPw(UserBean modifyUserBean);
 	
 	/**
-	 * <p>유저 정보 변경</p>
+	 * <pre>
+	 * 처리내용 : 유저 정보 변경
 	 */
 	public void modifyUserInfo(UserBean userBean);
 	

@@ -15,6 +15,10 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private BoardDao boardDao;
 
+	/**
+	 * <pre>
+	 * 처리내용 : 페이지 메인에 보여줄 게시글 리스트 가져오기 
+	 */
 	@Override
 	public List<ContentBean> getMainList(int boardInfoIdx) {
 		RowBounds rowBounds = new RowBounds(0, 5);

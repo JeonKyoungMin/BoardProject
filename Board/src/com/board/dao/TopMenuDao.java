@@ -13,8 +13,10 @@ import com.board.beans.BoardInfoBean;
 @Repository
 public interface TopMenuDao {
 
+	
 	/**
-	 * <p>상단 게시판 메뉴 정보 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 상단 게시판 메뉴 정보 가져오기
 	 */
 	public List<BoardInfoBean> getTopMenuList();
 

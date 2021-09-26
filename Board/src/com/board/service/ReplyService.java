@@ -12,12 +12,12 @@ import com.board.beans.ReplyBean;
 public interface ReplyService {
 
 	/**
-	 * <p>리플 리스트 가져오기</p>
+	 * <p>댓글 리스트 가져오기</p>
 	 */
 	public List<ReplyBean> selectReply(ReplyBean replyBean);
 	
 	/**
-	 * <p>리플 작성</p>
+	 * <p>댓글 작성</p>
 	 */
 	public void writeReply(ReplyBean replyBean);
 }

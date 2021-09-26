@@ -16,47 +16,68 @@ import com.board.beans.Criteria;
 public interface BoardDao {
 
 	/**
-	 * <p>게시글 작성</p>
+	 * <pre>
+	 * 처리내용 : 게시글 작성
 	 */
 	public void insertContent(ContentBean contentBean);
 	
 	/**
-	 * <p>게시판 정보 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 게시판 정보 가져오기
 	 */
 	public String getBoardInfo(int boardInfoIdx);
 	
 	/**
-	 * <p>게시글 리스트 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 게시글 리스트 가져오기
 	 */
 	public List<ContentBean> getContentList(int boardInfoIdx, RowBounds rowBounds);
 	
 	/**
-	 * <p>게시글 정보 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 게시글 정보 가져오기
 	 */
 	public ContentBean getContentInfo(int contentIdx);
 	
 	/**
-	 * <p>게시글 수정</p>
+	 * <pre>
+	 * 처리내용 : 게시글 수정
 	 */
 	public void modifyContent(ContentBean contentBean);
 	
 	/**
-	 * <p>게시글 삭제</p>
+	 * <pre>
+	 * 처리내용 : 게시글 삭제
 	 */
 	public void deleteContent(int contentIdx);
 	
 	/**
-	 * <p>페이징을 위해 게시글 개수 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 게시글 총갯수 가져오기
 	 */
 	public int getContentCnt(int contentBoardIdx);
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 조회수 증가
+	 */
 	public void hitByIdx(ContentBean contentBean);
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글의 이전, 다음 글 정보 가져오기
+	 */
 	public Criteria selectPrevNextNum(Criteria cri);
 	
-//	페이징 연습
-	
+	/**
+	 * <pre>
+	 * 처리내용 : 페이징을 포함한 게시글 가져오기
+	 */
 	public List<ContentBean> listPage(Criteria cri);
 	
+	/**
+	 * <pre>
+	 * 처리내용 : 게시글 전체 갯수 가져오기
+	 */
 	public int totalCount(Criteria cri);
 }

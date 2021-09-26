@@ -11,12 +11,14 @@ import com.board.beans.ReplyBean;
 public interface ReplyDao {
 
 	/**
-	 * <p>댓글 가져오기</p>
+	 * <pre>
+	 * 처리내용 : 댓글 리스트 가져오기
 	 */
 	public List<ReplyBean> selectReply(ReplyBean replyBean);
 	
 	/**
-	 * <p>댓글 작성</p>
+	 * <pre>
+	 * 처리내용 : 댓글 작성
 	 */
 	public void writeReply(ReplyBean replyBean);
 }
