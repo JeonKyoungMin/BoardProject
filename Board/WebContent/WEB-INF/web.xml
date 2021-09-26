@@ -20,7 +20,10 @@
 		<!--Spring MVC 설정을 위한 xml파일 지정  -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/config/servlet-context.xml</param-value>
+			<param-value>
+				/WEB-INF/config/servlet-context.xml
+				/WEB-INF/config/spring-security.xml
+			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<multipart-config>

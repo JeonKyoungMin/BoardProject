@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	BCryptPasswordEncoder pwdEncoder;
 	
 	@Resource(name= "loginUserBean")
 	@Lazy
@@ -64,18 +68,30 @@ public class UserController {
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(@ModelAttribute("joinUserBean") UserBean joinUserBean) {
+		
 		return "user/join";
 	}
 	
 	@RequestMapping(value="/join_pro", method=RequestMethod.POST)
 	public String join_pro(@Valid @ModelAttribute("joinUserBean") UserBean joinUserBean,
-						  BindingResult result) {
-		if (result.hasErrors()) {
-			return "user/join";
-		}
+						  BindingResult result) throws Exception {
 		
-		userService.addUser(joinUserBean);
-		return "user/join_success";
+		try {
+			if (result.hasErrors()) {
+				return "user/join";
+			} else {
+				String inputPass = joinUserBean.getUserPw();
+				String pwd = pwdEncoder.encode(inputPass);
+				joinUserBean.setUserPw(pwd);
+				
+				userService.addUser(joinUserBean);
+				
+				return "user/join_success";
+			}
+			
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
 	}
 	
 	@RequestMapping(value= {"/logout", "/not_login"}, method=RequestMethod.GET)
