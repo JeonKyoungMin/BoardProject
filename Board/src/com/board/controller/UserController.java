@@ -49,14 +49,21 @@ public class UserController {
 	public String login_pro(@Valid @ModelAttribute("tempLoginUserBean") UserBean tempLoginUserBean,
 			 BindingResult result, Model model) {
 		
+		UserBean login = userService.getloginBcryptUserInfo(tempLoginUserBean);
+		
+		boolean passMatch = pwdEncoder.matches(tempLoginUserBean.getUserPw(), login.getUserPw());
+		
+		System.out.println("login : "+ login);
+		System.out.println("temp : " + tempLoginUserBean.getUserPw());
+	    System.out.println("passMatch : "+ passMatch);	
+		
 		if (result.hasErrors()) {
 			return "user/login";
 		} 
 		
-		userService.getLoginUserInfo(tempLoginUserBean);
+		userService.getloginBcryptUserInfo(tempLoginUserBean);
 		
-		
-		if (loginUserBean.isUserLogin() == true) {
+		if (loginUserBean.isUserLogin() == true && passMatch == true) {
 			
 			return "user/login_success";
 		} else {

@@ -27,7 +27,7 @@ public interface UserDao {
 	 * <pre>
 	 * 처리내용 : 로그인 유저의 정보 가져오기
 	 */
-	public UserBean getLoginUserInfo(UserBean tempLoginUserBean);
+	public UserBean getloginBcryptUserInfo(UserBean tempLoginUserBean);
 	
 	/**
 	 * <pre>

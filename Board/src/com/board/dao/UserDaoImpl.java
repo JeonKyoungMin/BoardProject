@@ -40,11 +40,11 @@ public class UserDaoImpl implements UserDao {
 	 * <p>로그인 유저의 정보 검색</p>
 	 */
 	@Override
-	public UserBean getLoginUserInfo(UserBean tempLoginUserBean)  {
-		UserBean result = sqlSessionTemplate.selectOne("user.getLoginUserInfo", tempLoginUserBean);
+	public UserBean getloginBcryptUserInfo(UserBean tempLoginUserBean) {
+		UserBean result = sqlSessionTemplate.selectOne("user.getloginBcryptUserInfo", tempLoginUserBean);
 		
 		return result;
-	}	
+	}
 	
 	/**
 	 * <p>유저 정보 검색</p>

@@ -51,15 +51,16 @@ public class UserServiceImpl implements UserService {
 	 * <p>로그인 한 유저의 정보 검색 </p>
 	 */
 	@Override
-	public void getLoginUserInfo(UserBean tempLoginUserBean) {
-		UserBean tempLoginUserBean2 = userDao.getLoginUserInfo(tempLoginUserBean);
+	public UserBean getloginBcryptUserInfo(UserBean tempLoginUserBean) {
+		UserBean result = userDao.getloginBcryptUserInfo(tempLoginUserBean);
 		
-		if (tempLoginUserBean2 != null) {
-			loginUserBean.setUserIdx(tempLoginUserBean2.getUserIdx());
-			loginUserBean.setUserName(tempLoginUserBean2.getUserName());
+		if (result != null) {
+			loginUserBean.setUserIdx(result.getUserIdx());
+			loginUserBean.setUserName(result.getUserName());
 			loginUserBean.setUserLogin(true);
 		}
 		
+		return result;
 	}
 	
 	/**

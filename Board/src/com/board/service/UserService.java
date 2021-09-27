@@ -24,7 +24,7 @@ public interface UserService {
 	/**
 	 * <p>로그인 정보 가져오기</p>
 	 */
-	public void getLoginUserInfo(UserBean tempLoginUserBean);
+	public UserBean getloginBcryptUserInfo(UserBean tempLoginUserBean);
 
 	/**
 	 * <p>유저 정보 가져오기</p>
