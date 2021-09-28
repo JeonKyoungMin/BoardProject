@@ -56,7 +56,7 @@
 	
 	<select id="getloginBcryptUserInfo" resultMap="UserResult">
 		SELECT 
-			user_idx, user_id, user_name, user_Pw
+			<include refid="cols"/>
 		FROM
 			user_table
 		WHERE
@@ -69,7 +69,7 @@
 		FROM 
 			user_table
 		WHERE 
-			user_idx = #{userIdx}
+			user_id = #{userId}
 	</select>
 	
 	<delete id="deleteUser" parameterType="com.board.beans.UserBean">
@@ -79,8 +79,6 @@
 			user_idx = #{userIdx}
 		AND
 			user_num = #{userNum}
-    	AND
-    		user_pw = #{userPw}
 	</delete>
 	
 	<select id="findUserId" parameterType="com.board.beans.UserBean" resultType="java.lang.String">

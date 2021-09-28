@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
 		
 		if (result != null) {
 			loginUserBean.setUserIdx(result.getUserIdx());
+			loginUserBean.setUserId(result.getUserId());
 			loginUserBean.setUserName(result.getUserName());
 			loginUserBean.setUserLogin(true);
 		}

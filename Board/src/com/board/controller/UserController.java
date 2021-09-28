@@ -52,16 +52,11 @@ public class UserController {
 		UserBean login = userService.getloginBcryptUserInfo(tempLoginUserBean);
 		
 		boolean passMatch = pwdEncoder.matches(tempLoginUserBean.getUserPw(), login.getUserPw());
-		
-		System.out.println("login : "+ login);
-		System.out.println("temp : " + tempLoginUserBean.getUserPw());
-	    System.out.println("passMatch : "+ passMatch);	
-		
+
 		if (result.hasErrors()) {
+			
 			return "user/login";
 		} 
-		
-		userService.getloginBcryptUserInfo(tempLoginUserBean);
 		
 		if (loginUserBean.isUserLogin() == true && passMatch == true) {
 			
@@ -117,16 +112,21 @@ public class UserController {
 	
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public String delete(UserBean userBean) {
-		userBean.setUserIdx(loginUserBean.getUserIdx());
+		userBean.setUserId(loginUserBean.getUserId());
+		userBean.setUserName(loginUserBean.getUserName());
 		userService.getUserInfo(userBean);
-
+		
 		return "user/delete";
 	}
 	
 	@RequestMapping(value="/delete_pro", method=RequestMethod.POST)
 	public String delete_pro(UserBean userBean, Model model) {
 		
-		if (userBean.getUserPw().equals(loginUserBean.getUserPw()) &&
+		UserBean delete = userService.getloginBcryptUserInfo(userBean);
+		
+		boolean passMatch = pwdEncoder.matches(userBean.getUserPw(), delete.getUserPw());
+		
+		if (passMatch == true &&
 			userBean.getUserNum().equals(loginUserBean.getUserNum()))  {
 			userService.deleteUser(userBean);
 			loginUserBean.setUserLogin(false);
@@ -196,6 +196,8 @@ public class UserController {
 			
 			return "user/modifyPw";
 		} else {
+			modifyUserBean.setUserId(loginUserBean.getUserId());
+			modifyUserBean.setUserName(loginUserBean.getUserName());
 			modifyUserBean.setUserIdx(loginUserBean.getUserIdx());
 			userService.getUserInfo(modifyUserBean);
 			
@@ -210,6 +212,11 @@ public class UserController {
 			
 			return "user/modify";
 		} else {
+			
+			String inputPass = modifyUserBean.getUserPw();
+			String pwd = pwdEncoder.encode(inputPass);
+			modifyUserBean.setUserPw(pwd);
+			
 			userService.modifyUserInfo(modifyUserBean);
 			
 			return "redirect:/main";
@@ -224,6 +231,11 @@ public class UserController {
 			
 			return "user/modifyPw";
 		} else {
+			
+			String inputPass = modifyUserBean.getUserPw();
+			String pwd = pwdEncoder.encode(inputPass);
+			modifyUserBean.setUserPw(pwd);
+			
 			userService.modifyUserPw(modifyUserBean);
 			
 			return "redirect:/user/login";
